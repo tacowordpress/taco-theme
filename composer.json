@@ -1,0 +1,11 @@
+{
+  "name": "tacowordpress/taco-theme",
+  "type": "library",
+  "description": "A bare theme for WordPress that uses TacoWordPress",
+  "license": "proprietary",
+  "minimum-stability": "dev",
+  "version": "0.0.1",
+  "require": {
+    "php": ">= 5.4"
+  }
+}
