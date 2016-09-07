@@ -5,7 +5,11 @@
 _Always start with a shell._ | A bare theme for WordPress that uses TacoWordPress
 
 ### Setup
-Run `init` from the Taco theme directory to set up your Git hooks.
+This theme can be installed through the taco-installer or by moving the contents of the "src" directory out into a folder that's in "wp-content/themes".
+
+**Optional Git hooks for deploying distribution files**
+
+Run `init` from the Taco theme directory to set up your Git hooks. 
 
 ### Webpack
 Run `webpack -d --watch` from the theme directory to create development builds and watch your Javascript and SASS files.
