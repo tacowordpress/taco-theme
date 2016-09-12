@@ -194,7 +194,7 @@ function get_app_icons() {
     if(!preg_match('/\.png/', $file)) continue;
     preg_match('/(\d+x\d+)/', $file, $sizes);
 
-    $file = '/app/wp-content/app-icons/'.$file;
+    $file = '/wp-content/themes/taco-theme/_/src/img/app-icons/'.$file;
     if(preg_match('/apple-icon|android/', $file)) {
       $paths[] = '<link rel="apple-touch-icon" sizes="'.$sizes[0].'" href="'.$file.'">';
       continue;
@@ -204,7 +204,7 @@ function get_app_icons() {
       continue;
     }
   }
-  $paths[] = '<link rel="icon" href="/app/wp-content/app-icons/favicon.ico">';
+  $paths[] = '<link rel="icon" href="/wp-content/themes/taco-theme/_/src/img/app-icons/favicon.ico">';
   return join('', $paths);
 }
 
