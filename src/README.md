@@ -6,9 +6,10 @@
 Installing Taco to the theme can be done in 1 of 2 ways,
 
 1. using the [taco-installer](https://github.com/tacowordpress/taco-installer), or
-2. manually install the taco theme to a WordPress instance by reviewing this [README.md](https://github.com/tacowordpress/taco-theme) one level above.
+2. manually install the Taco Theme to a WordPress instance,
+  * see the [README.md](https://github.com/tacowordpress/taco-theme) one level above.
 
-## Requirements
+## Frontend Requirements
 * [Node.js](https://nodejs.org/en/)
 * [Webpack](https://webpack.github.io/docs/installation.html)
 
