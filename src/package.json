@@ -1,7 +1,7 @@
 {
-  "name": "taco-boilerplate",
+  "name": "taco-theme",
   "version": "1.0.0",
-  "description": "Taco Boilerplate",
+  "description": "Taco Theme",
   "dependencies": {},
   "devDependencies": {
     "babel-loader": "^6.2.4",
