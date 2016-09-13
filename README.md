@@ -3,25 +3,26 @@
 # Taco Theme
 > _Always start with a shell._ | A bare theme for WordPress that uses [tacowordpress](https://github.com/tacowordpress/tacowordpress)
 
-This theme can either be installed manually to an already existing WordPress installation, or it can be installed using the [taco-installer](https://github.com/tacowordpress/taco-installer), which will automate the setup for a brand new WordPress instance.
+Installing Taco to the theme can be done in 1 of 2 ways,
 
-## Installing this theme manually to a WordPress instance
+1. using the [taco-installer](https://github.com/tacowordpress/taco-installer), or
+2. manually installing this taco-theme by following the instructions below:
 
-If you're not using the taco-installer, follow the instructions below
+## Manually Installing Taco Theme to a WordPress instance
 
 ## Requirements
 * [Composer](https://getcomposer.org/)
 
 ## Installing / Getting started
 
-With a WordPress instance already setup, create a new directory in the theme and call it taco-theme. Download this taco-theme, and copy/paste all the contents from /src into the new WordPress taco-theme.
+With a WordPress instance already setup, create a new directory in the theme and call it taco-theme. Download this taco-theme, and copy/paste all the contents from /src into the new WordPress taco-theme directory.
 
 Next,
 
 cd into the taco-theme's `/app/core` directory, and run `composer install`
 
-This will install TacoWordpress and all other composer-specified dependencies. For information on how to use TacoWordpress, check out the [repo](https://github.com/tacowordpress/tacowordpress). For complete documentation, see the [wiki](https://github.com/tacowordpress/tacowordpress/wiki).
+This will install tacowordpress and all other composer-specified dependencies. For information on how to use tacowordpress, check out the [repo](https://github.com/tacowordpress/tacowordpress). For complete documentation, see the [wiki](https://github.com/tacowordpress/tacowordpress/wiki).
 
 ## Running tasks inside the theme
 
-For all frontend instructions on running the theme compilers, entry points, sass compilation, javascript minification etc., see the theme's [README.md file](/src/README.md).
+For all frontend-related tasks for running in the theme, including: compilation, entrypoints, minification, see the theme's [README.md file](/src/README.md).
