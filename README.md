@@ -1,7 +1,7 @@
 <img alt="Taco Theme Logo" src="https://raw.githubusercontent.com/tacowordpress/taco-theme/master/src/logo-taco-theme.gif" width="300">
 ---
 # Taco Theme
-> _Always start with a shell._ | A bare theme for WordPress that uses [TacoWordPress](https://github.com/tacowordpress/tacowordpress)
+> _Always start with a shell._ | A bare theme for WordPress that uses [tacowordpress](https://github.com/tacowordpress/tacowordpress)
 
 This theme can either be installed manually to an already existing WordPress installation, or it can be installed using the [taco-installer](https://github.com/tacowordpress/taco-installer), which will automate the setup for a brand new WordPress instance.
 
