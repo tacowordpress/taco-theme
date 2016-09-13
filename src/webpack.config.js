@@ -4,7 +4,7 @@ let ExtractTextPlugin     = require('extract-text-webpack-plugin');
 let WebpackNotifierPlugin = require('webpack-notifier');
 let webpack               = require('webpack');
 let fs                    = require('fs');
-let path                  = require('path')
+let path                  = require('path');
 
 let is_production = false;
 process.argv.forEach(function(arg) {
@@ -23,6 +23,10 @@ let files = fs.readdirSync(source_path);
 
 let entry_points = {};
 files.forEach(function(file) {
+  if(file[0] === '.') {
+    return;
+  }
+  
   let stat = fs.statSync(source_path + file);
 
   if (stat.isFile()) {
@@ -35,9 +39,10 @@ let config = {
   add_vendor: function (name, path) {
     this.resolve.alias[name] = path;
     this.module.noParse.push(new RegExp(path));
+    this.entry[name] = [name];
   },
   entry: entry_points,
-  devtool: is_production ? '' : 'source-map',
+  devtool: 'source-map',
   output: {
       path: output_path + 'dist/',
       filename: '[name]' + (is_production === true ? '.min' : '') +  '.js'
