@@ -51,6 +51,7 @@ SASS files similarly live in the `_/src/scss` directory.  These files are not au
 At this time, CSS also outputs to the `_/dist` directory and does not output by the Javascript itself, so you do need to explicitly include them in your HTML.
 
 
+/* @Ian, please advise for everything below this line, as we've discussed this is out of date for now */
 ## Optional git hooks for deploying `/dist` files:
 Run `init` from the taco theme root directory to setup git hooks.
 
