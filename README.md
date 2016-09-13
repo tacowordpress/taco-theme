@@ -3,12 +3,13 @@
 # Taco Theme
 > _Always start with a shell._ | A bare theme for WordPress that uses [tacowordpress](https://github.com/tacowordpress/tacowordpress)
 
-Installing Taco to the theme can be done in 1 of 2 ways,
+Installing tacowordpress into the theme can be done in 1 of 2 ways,
 
 1. using the [taco-installer](https://github.com/tacowordpress/taco-installer), or
-2. manually installing this taco-theme by following the instructions below:
+2. manually installing this Taco Theme to a WordPress instance by following the instructions below:
 
 ## Manually Installing Taco Theme to a WordPress instance
+_without the taco-installer_
 
 ## Requirements
 * [Composer](https://getcomposer.org/)
@@ -21,7 +22,9 @@ Next,
 
 cd into the taco-theme's `/app/core` directory, and run `composer install`
 
-This will install tacowordpress and all other composer-specified dependencies. For information on how to use tacowordpress, check out the [repo](https://github.com/tacowordpress/tacowordpress). For complete documentation, see the [wiki](https://github.com/tacowordpress/tacowordpress/wiki).
+This will install [tacowordpress](https://github.com/tacowordpress/tacowordpress) and all other composer-specified dependencies.
+
+For information on how to use tacowordpress, check out the [repo](https://github.com/tacowordpress/tacowordpress). For complete documentation, see the [wiki](https://github.com/tacowordpress/tacowordpress/wiki).
 
 ## Running tasks inside the theme
 
