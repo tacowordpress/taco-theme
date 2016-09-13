@@ -24,6 +24,8 @@ This will add node modules required for the theme to run tasks, particularly for
 
 This will create development builds, watch your JavaScript and SASS files.
 
+/* @Ian, please advise for everything below this line, it's a little loosely worded for now. */
+
 ## Webpack Configuration
 
 Webpack configuration is defined on the `webpack.config.js`
@@ -34,15 +36,15 @@ Running `webpack -d --watch` will look for changes across files and compile them
 
 ### Production Tasks
 
-Running `webpack -p` will run minification on files.
+Running `webpack -p` will run minification tasks.
 
-### Webpack src and dist
+### Webpack `/src` and `/dist`
 
-Source files are located in `_/src` directory of the theme. Compiled files are added by webpack to the `_/dist`, when they are referenced.
+Source files are located in `_/src` directory of the theme. Compiled files are dynamically added by webpack to the `_/dist`, when they are referenced via entrypoints.
 
 ### Webpack JS entrypoint
 
-All Javascript files in the top level `_/src/js` folder are built and output to the `_/dist` folder.  Any Javascript meant to be included by these top level files should go under subdirectories in the `_/src/js` folder.  The top level Javascript files are responsible for importing any SASS files that need to be built and output (see `src/js/main.js` for an example).
+All Javascript files in the top level `_/src/js` folder are built and output to the `_/dist` folder.  Any Javascript meant to be included by these top level files should go under subdirectories in the `_/src/js` folder.  The top level Javascript files are responsible for importing any SASS files that need to be built and output (see `_/src/js/main.js` for an example).
 
 ### Webpack SASS entrypoint
 SASS files similarly live in the `_/src/scss` directory.  These files are not auto compiled until they're included by a Javascript file, so it's not entirely necessary to enforce a naming convention for these files, but in general, included files should begin with an underscore and top level files should not.
@@ -50,9 +52,9 @@ SASS files similarly live in the `_/src/scss` directory.  These files are not au
 ### Webpack CSS entrypoint
 At this time, CSS also outputs to the `_/dist` directory and does not output by the Javascript itself, so you do need to explicitly include them in your HTML.
 
-
 /* @Ian, please advise for everything below this line, as we've discussed this is out of date for now */
-## Optional git hooks for deploying `/dist` files:
+
+### Optional git hooks for deploying `/dist` files:
 Run `init` from the taco theme root directory to setup git hooks.
 
 ## Deployment Instructions
