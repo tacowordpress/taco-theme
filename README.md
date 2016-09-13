@@ -1,29 +1,27 @@
-
-
 <img alt="Taco Theme Logo" src="https://raw.githubusercontent.com/tacowordpress/taco-theme/master/src/logo-taco-theme.gif" width="300">
 ---
-_Always start with a shell._ | A bare theme for WordPress that uses TacoWordPress
+# Taco Theme
+> _Always start with a shell._ | A bare theme for WordPress that uses [TacoWordPress](https://github.com/tacowordpress/tacowordpress)
 
-### Setup
-This theme can be installed through the taco-installer or by moving the contents of the "src" directory out into a folder that's in "wp-content/themes".
+This theme can either be installed manually to an already existing WordPress installation, or it can be installed using the [taco-installer](https://github.com/tacowordpress/taco-installer), which will automate the setup for a brand new WordPress instance.
 
-**Optional Git hooks for deploying distribution files**
+## Installing this theme manually to a WordPress instance
 
-Run `init` from the Taco theme directory to set up your Git hooks. 
+If you're not using the taco-installer, follow the instructions below
 
-### Webpack
-Run `webpack -d --watch` from the theme directory to create development builds and watch your Javascript and SASS files.
+## Requirements
+* [Composer](https://getcomposer.org/)
 
-Run `webpack -p` from the theme directory to do a production build.
+## Installing / Getting started
 
-##### Sources
-Source files are located in the `src` directory in the Taco theme directory, and compiled files and sourcemaps are located in the `dist` folder.
+With a WordPress instance already setup, create a new directory in the theme and call it taco-theme. Download this taco-theme, and copy/paste all the contents from /src into the new WordPress taco-theme.
 
-All Javascript files in the top level `src/js` folder are built and output to the `dist` folder.  Any Javascript meant to be included by these top level files should go under subdirectories in the `src/js` folder.  The top level Javascript files are responsible for importing any SASS files that need to be built and output (see `src/js/main.js` for an example).
+Next,
 
-SASS files similarly live in the `src/scss` directory.  These files are not auto compiled until they're included by a Javascript file, so it's not entirely necessary to enforce a naming convention for these files, but in general, included files should begin with an underscore and top level files should not.
+cd into the taco-theme's `/app/core` directory, and run `composer install`
 
-At this time, CSS is also output to the `dist` directory and not output by the Javascript itself, so you do need to explicitly include them in your HTML.
+This will install TacoWordpress and all other composer-specified dependencies. For information on how to use TacoWordpress, check out the [repo](https://github.com/tacowordpress/tacowordpress). For complete documentation, see the [wiki](https://github.com/tacowordpress/tacowordpress/wiki).
 
-### Deploying
-Until a site is live, development can happen on the `master` branch which can be auto-deployed to both the staging and production server.  Once it's launched however, development should be switched to the `develop` branch which is auto-deployed to the staging server.  The production server should run off the `master` branch and have deployment set to manual.
+## Running tasks inside the theme
+
+For all frontend instructions on running the theme compilers, entry points, sass compilation, javascript minification etc., see the theme's [README.md file](/src/README.md).
