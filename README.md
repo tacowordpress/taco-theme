@@ -25,4 +25,4 @@ This will install tacowordpress and all other composer-specified dependencies. F
 
 ## Running tasks inside the theme
 
-For all frontend-related tasks for running in the theme, including: compilation, entrypoints, minification, see the theme's [README.md file](/src/README.md).
+For all frontend-related tasks, including: compiling, entrypoints, minification, see the theme's [README.md file](/src/README.md).
