@@ -20,9 +20,9 @@ With a WordPress instance already setup, create a new directory in the theme and
 
 Next,
 
-cd into the taco-theme's `/app/core` directory, and run `composer install`
+cd into the taco-theme's `/app/core` directory, in your WordPress instance, and run `composer install`
 
-This will install [tacowordpress](https://github.com/tacowordpress/tacowordpress) and all other composer-specified dependencies.
+This will install [tacowordpress](https://github.com/tacowordpress/tacowordpress) and all other composer-specified dependencies on the `composer.json` file.
 
 For information on how to use tacowordpress, check out the [repo](https://github.com/tacowordpress/tacowordpress). For complete documentation, see the [wiki](https://github.com/tacowordpress/tacowordpress/wiki).
 
