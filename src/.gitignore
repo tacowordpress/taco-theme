@@ -1,8 +1,13 @@
+# composer dir
+/app/core/vendor/*
+
+# frontend
 node_modules
 .sass-cache
+
+# source mapping
 *.css.map
 *.js.map
-
 
 *.log
 *.zip
@@ -24,4 +29,3 @@ Thumbs.db
 *.exe
 *.o
 *.so
-
