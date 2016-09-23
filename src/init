@@ -4,6 +4,15 @@
 
 root=$(git rev-parse --show-toplevel)
 
+#Ignore minified js and css files in diffs
+cat > $root/.gitattributes <<EOF
+*.min.js            -diff
+*.min.css           -diff
+
+*.min.js            merge=ours
+*.min.css           merge=ours
+EOF
+
 #Add to pre push hook
 if ! grep -q 'Keep ours merge' $root/.git/config ; then
 cat >> $root/.git/config <<EOF
