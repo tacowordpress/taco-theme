@@ -26,7 +26,7 @@ files.forEach(function(file) {
   if(file[0] === '.') {
     return;
   }
-  
+
   let stat = fs.statSync(source_path + file);
 
   if (stat.isFile()) {
@@ -42,7 +42,7 @@ let config = {
     this.entry[name] = [name];
   },
   entry: entry_points,
-  devtool: 'source-map',
+  devtool: is_production ? 'none' : 'source-map',
   output: {
       path: output_path + 'dist/',
       filename: '[name]' + (is_production === true ? '.min' : '') +  '.js'
