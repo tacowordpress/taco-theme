@@ -4,6 +4,7 @@
 # frontend
 node_modules
 .sass-cache
+_/dist
 
 # source mapping
 *.css.map
