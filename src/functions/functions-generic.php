@@ -63,11 +63,11 @@ function app_enqueue_style($is_admin=false) {
     ? app_admin_get_css()
     : app_get_css();
   if(!Arr::iterable($styles)) return;
-  
+
   $template_directory = get_template_directory_uri();
   foreach($styles as $media => $media_styles) {
     if(!Arr::iterable($media_styles)) continue;
-    
+
     foreach($media_styles as $k => $media_style) {
       $path = (preg_match('/^(https?\:|\/\/)/', $media_style))
         ? $media_style
@@ -89,7 +89,7 @@ function app_enqueue_script($is_admin=false) {
     ? app_admin_get_js()
     : app_get_js();
   if(!Arr::iterable($scripts)) return;
-  
+
   $template_directory = get_template_directory_uri();
   foreach($scripts as $key => $script) {
     $path = (preg_match('/^(https?\:|\/\/)/', $script))
@@ -136,7 +136,7 @@ if(is_admin() && !is_auth_page()) {
  */
 function app_clean_admin_nav() {
   global $menu;
-  
+
   // Use regex to match b/c some items will have numbers suffixed (e.g. Comments 1)
   $remove_titles = array(
     //'/Dashboard/i',
@@ -157,7 +157,7 @@ function app_clean_admin_nav() {
   foreach($items as $id=>$title) {
     foreach($remove_titles as $regex) {
       if(!preg_match($regex, $title)) continue;
-      
+
       unset($menu[$id]);
       break;
     }

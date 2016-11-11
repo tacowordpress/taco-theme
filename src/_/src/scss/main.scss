@@ -1,25 +1,23 @@
 //this gets roped into cache busting as described on config.php
 $version: 1;
 
+// util functions
+@import "util/functions";
+@import "util/mixins";
+@import "util/breakbeat";
+@import "util/remedy";
+
 // definitions
-@import "fonts";
-@import "colors";
-@import "mixins";
+@import "global/typography";
+@import "global/colors";
+@import "global/mixins";
+@import "global/dev";
 
 // global typography
-@import "typography";
+@import "global/typography";
 
 // define the overall styles for templates
-@import "theme";
+@import "global/theme";
 
-// define modular styles
-@import "module";
-
-
-//@import "modal";
-
-
-// media queries for breakpoints last
-@import "mobile";
-
-@import "foundation";
+// foundation
+@import "global/foundation";

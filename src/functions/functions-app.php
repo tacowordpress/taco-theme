@@ -30,8 +30,13 @@ function app_get_js() {
     ? '_/dist/jquery.min.js'
     : '_/dist/jquery.js';
 
+  $lodash_js = (ENVIRONMENT !== ENVIRONMENT_DEV)
+    ? '_/dist/lodash.min.js'
+    : '_/dist/lodash.js';
+
   return [
     'jquery' => $jquery_js,
+    'lodash' => $lodash_js,
     'main' => $app_js,
   ];
 }

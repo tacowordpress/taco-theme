@@ -13,8 +13,10 @@ process.argv.forEach(function(arg) {
   }
 });
 
-let source_path = './_/src/js/';
-let output_path = './_/';
+let source_path = __dirname + '/_/src/js/';
+let output_path = __dirname + '/_/';
+
+let CONFIG = require(source_path + 'util/config.js');
 
 let node_dir = __dirname + '/node_modules/';
 
@@ -77,6 +79,10 @@ let config = {
     new webpack.ProvidePlugin({
         '$': 'jquery',
         'jQuery': 'jquery',
+        '_': 'lodash/core',
+    }),
+    new webpack.DefinePlugin({
+      CONFIG: CONFIG,
     }),
     new webpack.optimize.CommonsChunkPlugin({
       name: 'jquery',
@@ -86,5 +92,6 @@ let config = {
 };
 
 config.add_vendor('jquery', node_dir + 'jquery/dist/jquery' + (is_production === true ? '.min' : '') +  '.js');
+config.add_vendor('lodash', node_dir + 'lodash/core' + (is_production === true ? '.min' : '') +  '.js');
 
 module.exports = config;

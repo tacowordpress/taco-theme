@@ -1,4 +1,4 @@
-@import "../../../node_modules/foundation-sites/scss/foundation";
+@import "../../../../node_modules/foundation-sites/scss/foundation";
 @import "foundation_settings";
 
 // Foundation components.  Uncomment as needed.
@@ -7,14 +7,14 @@
     $global-flexbox: true !global;
   }
 
-  // @include foundation-global-styles;
-  // @if not $flex {
-  //   @include foundation-grid;
-  // }
-  // @else {
-  //   @include foundation-flex-grid;
-  // }
-  // @include foundation-typography;
+  @include foundation-global-styles;
+  @if not $flex {
+    @include foundation-grid;
+  }
+  @else {
+    @include foundation-flex-grid;
+  }
+  @include foundation-typography;
   // @include foundation-forms;
   // @include foundation-button;
   // @include foundation-accordion;

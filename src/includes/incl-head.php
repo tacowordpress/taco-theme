@@ -22,7 +22,17 @@ $theme = AppOption::getInstance();
 
 </head>
 
-<?php global $body_class; ?>
-<body <?php body_class((isset($body_class)) ? $body_class : null); ?>>
+<?php
+  global $body_class;
+
+  if (!isset($body_class)) {
+    $body_class = [];
+  }
+
+  if (ENVIRONMENT === ENVIRONMENT_DEV) {
+    $body_class[] = 'dev';
+  }
+?>
+<body <?php body_class($body_class); ?>>
 
 <?php include __DIR__.'/incl-google-tag-manager.php'; ?>
