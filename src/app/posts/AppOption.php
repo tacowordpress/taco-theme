@@ -108,9 +108,10 @@ class AppOption extends \Taco\Post {
   /**
    * Get a value by key but allow defaults from getFields
    * @param string $key
+   * @param bool $convert_value
    * @return mixed
    */
-  public function get($key) {
+  public function get($key, $convert_value=false) {
     $val = parent::get($key);
     if($val) return $val;
     
