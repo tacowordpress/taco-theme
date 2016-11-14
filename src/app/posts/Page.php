@@ -5,7 +5,7 @@ class Page extends \Taco\Post {
   public $loaded_post = null;
   
   public function getFields() {
-    $this->loadPost();
+    if(!$this->loadPost()) return [];
     
     $fields_by_template = [];
     if(Obj::iterable($this->loaded_post)) {
@@ -47,11 +47,14 @@ class Page extends \Taco\Post {
   public function loadPost() {
     // For some reason, the global post var cannot be accessed at this state. So we have to load it manually
     $query_string = parse_url($_SERVER['QUERY_STRING']);
+    if(empty($query_string)) return false;
+    if(Obj::iterable($this->loaded_post)) return false;
+    
     $query_string = parse_str($query_string['path'], $query_vars);
-
     if(!array_key_exists('post', $query_vars)) {
       return false;
     }
+    
     $post_id = $query_vars['post'];
     $post_object = get_post($post_id);
     if(is_object($post_object)) {
