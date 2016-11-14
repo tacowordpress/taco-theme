@@ -6,11 +6,17 @@ class Page extends \Taco\Post {
   
   public function getFields() {
     $this->loadPost();
+    
+    $fields_by_template = [];
+    if(Obj::iterable($this->loaded_post)) {
+      $fields_by_template = $this->getFieldsByPageTemplate(
+        get_page_template_slug($this->loaded_post->ID)
+      );
+    }
+    
     return array_merge(
       $this->getDefaultFields(),
-      $this->getFieldsByPageTemplate(
-        get_page_template_slug($this->loaded_post->ID)
-      )
+      $fields_by_template
     );
   }
 
