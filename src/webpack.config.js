@@ -1,10 +1,10 @@
 'use strict';
 
-let ExtractTextPlugin     = require('extract-text-webpack-plugin');
-let WebpackNotifierPlugin = require('webpack-notifier');
-let webpack               = require('webpack');
-let fs                    = require('fs');
-let path                  = require('path');
+const ExtractTextPlugin     = require('extract-text-webpack-plugin');
+const WebpackNotifierPlugin = require('webpack-notifier');
+const webpack               = require('webpack');
+const fs                    = require('fs');
+const path                  = require('path');
 
 let is_production = false;
 process.argv.forEach(function(arg) {
@@ -13,10 +13,12 @@ process.argv.forEach(function(arg) {
   }
 });
 
-let source_path = './_/src/js/';
-let output_path = './_/';
+let source_path = __dirname + '/_/src/js/';
+let output_path = __dirname + '/_/';
 
 let node_dir = __dirname + '/node_modules/';
+
+let CONFIG = require(source_path + 'util/config.js');
 
 // Get all top level files
 let files = fs.readdirSync(source_path);
@@ -44,8 +46,8 @@ let config = {
   entry: entry_points,
   devtool: is_production ? 'none' : 'source-map',
   output: {
-      path: output_path + 'dist/',
-      filename: '[name]' + (is_production === true ? '.min' : '') +  '.js'
+    path: output_path + 'dist/',
+    filename: '[name]' + '.js'
   },
   resolve: { alias: {} },
   module: {
@@ -68,23 +70,27 @@ let config = {
     ],
     noParse: []
   },
+  sassLoader: {
+    data: '$ENVIRONMENT: ' + (is_production === true ? 'production' : 'development') + ';',
+  },
   plugins: [
-    new ExtractTextPlugin('[name]' + (is_production === true ? '.min' : '') +  '.css'),
+    new ExtractTextPlugin('[name]' +  '.css'),
     new WebpackNotifierPlugin(),
     new webpack.DefinePlugin({
-        'process.env.NODE_ENV': (is_production === true ? 'production' : 'development')
+      'process.env.NODE_ENV': (is_production === true ? 'production' : 'development'),
     }),
     new webpack.ProvidePlugin({
-        '$': 'jquery',
-        'jQuery': 'jquery',
+      '$': 'jquery',
+      'jQuery': 'jquery',
+      '_': 'lodash/core',
     }),
-    new webpack.optimize.CommonsChunkPlugin({
-      name: 'jquery',
-      minChunks: Infinity,
-    })
+    new webpack.DefinePlugin({
+      CONFIG: CONFIG,
+    }),
   ],
 };
 
 config.add_vendor('jquery', node_dir + 'jquery/dist/jquery' + (is_production === true ? '.min' : '') +  '.js');
+config.add_vendor('lodash', node_dir + 'lodash/core' + (is_production === true ? '.min' : '') +  '.js');
 
 module.exports = config;
