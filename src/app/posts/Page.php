@@ -3,22 +3,39 @@
 class Page extends \Taco\Post {
 
   public $loaded_post = null;
-  
+
+  /**
+   * Get the fields for this page type by merging the default template fields
+   * with page specific ones
+   * @return array The array of fields
+   */
   public function getFields() {
-    if(!$this->loadPost()) return [];
-    
-    $fields_by_template = [];
-    if(Obj::iterable($this->loaded_post)) {
-      $fields_by_template = $this->getFieldsByPageTemplate(
-        get_page_template_slug($this->loaded_post->ID)
-      );
+    // First figure out what template we're on to get the correct fields
+    // If this is the user facing page, then _wp_page_template will be populated
+    // and that can be used as the template.
+    //
+    // If this is the admin facing page, then loadPost() is run to figure out
+    // the page ID and the template is determined that way
+    if (!empty($this->_wp_page_template)) {
+      $template = $this->_wp_page_template;
+    } else {
+      if(!$this->loadPost() || !Obj::iterable($this->loaded_post)) return [];
+
+      $template = get_page_template_slug($this->loaded_post->ID);
+      $this->_wp_page_template = $template;
     }
-    
+
+    $fields_by_template = [];
+    if (!empty($template)) {
+      $fields_by_template = $this->getFieldsByPageTemplate($template);
+    }
+
     return array_merge(
       $this->getDefaultFields(),
       $fields_by_template
     );
   }
+
 
   public function getDefaultFields() {
     return array(
@@ -28,10 +45,10 @@ class Page extends \Taco\Post {
         'data-post-type' => 'Page')
     );
   }
-  
+
   public function getFieldsByPageTemplate($template_file_name) {
     $template_fields = [];
-    
+
     if($template_file_name === 'tmpl-example.php') {
       $template_fields = array_merge($template_fields, [
         'field_name' => [
@@ -40,22 +57,25 @@ class Page extends \Taco\Post {
         ],
       ]);
     }
-    
+
     return $template_fields;
   }
-  
+
+  /**
+   * This should only be used on the admin side to manually load the post in getFields()
+   * because the global $post var isn't accessible when we need it
+   */
   public function loadPost() {
-    // For some reason, the global post var cannot be accessed at this state. So we have to load it manually
-    $query_string = parse_url($_SERVER['QUERY_STRING']);
-    if(empty($query_string)) return false;
-    if(Obj::iterable($this->loaded_post)) return false;
-    
-    $query_string = parse_str($query_string['path'], $query_vars);
-    if(!array_key_exists('post', $query_vars)) {
-      return false;
+    // When we're loading the page, it's in the query string.
+    // When we're saving the page, it's in the post vars
+    if (!empty($_POST['post_ID'])) {
+      $post_id = $_POST['post_ID'];
+    } else if (!empty($_GET['post'])) {
+      $post_id = $_GET['post'];
     }
-    
-    $post_id = $query_vars['post'];
+
+    if(empty($post_id)) return false;
+
     $post_object = get_post($post_id);
     if(is_object($post_object)) {
       $this->loaded_post = $post_object;
