@@ -7,9 +7,16 @@ Taco Config aims to simplify configuring options for a Taco WordPress site. In a
 - Remove global functions from `functions.php`
 - Reduce unnecessary duplication across multiple projects
 
-Configuration is defined in `TacoConfig::setConfig()`, a basic example of which might be:
+Configuration is defined in just a few methods in the `Config` class. Here are some basic examples.
 
 ```php
+protected function setClasses() {
+  $this->config['classes'] = [
+    'posts/Post.php',
+    'posts/Page.php',
+  ];
+}
+
 protected function setConfig() {
   $this->config = [
     'version_scss_file' => '_/scss/_version.scss',
@@ -31,9 +38,15 @@ protected function setConfig() {
 
 ## How to configure a Taco site
 
-In `TacoConfig.php`, define the options for the site.
+In `Config.php`, define the options for the site.
 
 ```php
+protected function setClasses() {
+  $this->config['classes'] = [
+    // Set paths to Taco classes here
+  ];
+}
+
 protected function setConfig() {
   $this->config = [
     // Define options here
@@ -41,11 +54,30 @@ protected function setConfig() {
 }
 ```
 
-Consult the available [options](#options), or see `TacoConfigBase::defaultConfig()` for a complete list of options.
+Consult the available [options](#options), or see `ConfigBase::defaultConfig()` for a complete list of options.
 
-If needed, you can create other methods in the `TacoConfig` class to handle any functionality that feeds into the options you set. These methods can be private.
+If needed, you can create other methods in the `Config` class to handle any functionality that feeds into the options you set. These methods can be private.
 
-If you need to execute anything beyond the scope of the standard options, use `TacoConfig::done()`. This is essentially a dumping ground for site-specific functionality that isn't supported by the existing options. You can add more filters, call more methods, whatever needs to be done.
+If you need to execute anything beyond the scope of the standard options, use `Config::done()`. This is essentially a dumping ground for site-specific functionality that isn't supported by the existing options. You can add more filters, call more methods, whatever needs to be done.
+
+
+## Classes
+
+In the `classes` option, set the paths to Taco classes, relative to the `app` directory.
+
+```php
+protected function setClasses() {
+  $this->config['classes'] = [
+    'traits/Taquito.php',
+    'terms/Category.php',
+    'posts/AppOption.php',
+    'posts/Post.php',
+    'posts/Page.php',
+  ];
+}
+```
+
+Note: Skip this step if your classes are autoloaded.
 
 ---
 
@@ -62,6 +94,7 @@ Options are defined as keys of the `config` property. Only the pre-defined keys 
 
 Option | Type | Description
 :----- | :--- | :----------
+`classes` | array | Paths to Taco class files, relative to the `app` directory
 `version_scss_file` | string | Path to a SCSS file containing a single variable `$version`, useful for busting cache
 `timezone_local` | string | Local time zone (see [time zones in PHP](http://php.net/manual/en/timezones.php))
 `timezone_prod` | string | Time zone for the production server
@@ -107,7 +140,7 @@ Option | Type | Description
 `remove_wordpress_link_from_login` | boolean | Remove the WordPress link from the logo on the login page
 `preserve_term_hierarchy` | boolean | Preserve the order of taxonomy terms, instead of moving selected terms to the top of the list   Prevent reordering selected taxonomy terms
 `disable_primary_term` | boolean | When Yoast is installed, disable its ability to designate one term applied to a post as the primary term, when multiple are selected (the primary term may optionally be used in page titles on posts that bypass WordPress routing)
-`dashboard_widgets` | array | List of static methods in `TacoConfig` that output HTML to be displayed on the dashboard (see [Dashboard widgets](#dashboard-widgets))
+`dashboard_widgets` | array | List of static methods in `Config` that output HTML to be displayed on the dashboard (see [Dashboard widgets](#dashboard-widgets))
 `admin_menu_separators` | array | Indices where separators should be inserted in the admin sidebar menu (see the [default menu indices](https://developer.wordpress.org/reference/functions/add_menu_page/#menu-structure))
 `admin_css` | array | Paths to CSS files for styling the admin (see [Loading CSS and JS](#loading-css-and-js))
 `editor_css` | array | Paths to CSS files for using custom styles in TinyMCE
@@ -194,7 +227,7 @@ Note: In order for WordPress to deregister an existing script that you intend to
 
 ## Customizing body and menu classes
 
-In addition to automatically adding classes to the body and menu items (using the `add_slug_to_body_class` and `add_slug_to_menu_item_class` options), you can also perform additional customizations with `TacoConfig::modifyBodyClasses()` and `TacoConfig::modifyMenuClasses()`.
+In addition to automatically adding classes to the body and menu items (using the `add_slug_to_body_class` and `add_slug_to_menu_item_class` options), you can also perform additional customizations with `Config::modifyBodyClasses()` and `Config::modifyMenuClasses()`.
 
 ```php
 protected function modifyBodyClasses($classes) {
@@ -208,7 +241,7 @@ protected function modifyBodyClasses($classes) {
 }
 ```
 
-Note: `TacoConfig::modifyBodyClasses()` allows you to modify the array of body classes, while `TacoConfig::modifyMenuClasses()` only provides a string containing the entire menu HTML.
+Note: `Config::modifyBodyClasses()` allows you to modify the array of body classes, while `Config::modifyMenuClasses()` only provides a string containing the entire menu HTML.
 
 
 ## Views directories
@@ -332,7 +365,7 @@ This can be useful when you want to restrict access to a parent page, but allow 
 
 ## Dashboard widgets
 
-To add a widget to the admin dashboard, assign an array to the `dashboard_widgets` option. Use the widget name as the key, and the name of a public method in `TacoConfig` as the value.
+To add a widget to the admin dashboard, assign an array to the `dashboard_widgets` option. Use the widget name as the key, and the name of a public method in `Config` as the value.
 
 ```php
 $this->config = [

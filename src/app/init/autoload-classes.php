@@ -16,17 +16,6 @@ $loader->register();
 $loader->addNamespace('\AppLibrary\\', __DIR__.'/../lib/AppLibrary/src');
 
 
-// Traits
-require_once __DIR__.'/../traits/Taquito.php';
-
-// Taxonomies
-require_once __DIR__.'/../terms/Category.php';
-
-// Post types
-require_once __DIR__.'/../posts/AppOption.php';
-require_once __DIR__.'/../posts/Post.php';
-require_once __DIR__.'/../posts/Page.php';
-
 // Shortcuts
 class Arr extends \Taco\Util\Arr {}
 class Collection extends \Taco\Util\Collection {}

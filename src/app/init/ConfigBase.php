@@ -1,11 +1,12 @@
 <?php
+namespace Taco;
 
 use \Taco\Util\Arr as Arr;
 use \Taco\Util\Obj as Obj;
 use \Taco\Util\Str as Str;
 use \Taco\Util\View as View;
 
-class TacoConfigBase {
+class ConfigBase {
   
   private static $instance = null;
   
@@ -23,6 +24,7 @@ class TacoConfigBase {
   public function __construct() {
     $this->setDefaults();
     $this->setConfig();
+    $this->setClasses();
     $this->setConstants();
     $this->defineUserConstants($this->constants);
     
@@ -98,6 +100,14 @@ class TacoConfigBase {
   
   
   /**
+   * Set classes
+   */
+  protected function setClasses() {
+    return true;
+  }
+  
+  
+  /**
    * Set config options
    */
   protected function setConfig() {
@@ -133,6 +143,7 @@ class TacoConfigBase {
    * Process results of getting config
    */
   private function processConfig() {
+    $this->loadClasses();
     $this->setTimezone();
     $this->defineDefaultConstants();
     $this->setSuperAdmin();
@@ -170,6 +181,20 @@ class TacoConfigBase {
     )));
     
     $this->done();
+  }
+  
+  
+  /**
+   * Load classes
+   */
+  private function loadClasses() {
+    $classes = $this->classes;
+    if(!($classes = $this->validateString($classes))) return false;
+    
+    foreach($classes as $class) {
+      require_once __DIR__.'/../'.$class;
+    }
+    return true;
   }
   
   
@@ -1033,9 +1058,9 @@ class TacoConfigBase {
     if(!Arr::iterable($this->dashboard_widgets)) return false;
     
     foreach($this->dashboard_widgets as $title => $method) {
-      if(!method_exists('TacoConfig', $method)) continue;
+      if(!method_exists('Taco\Config', $method)) continue;
       
-      $html = TacoConfig::{$method}();
+      $html = Config::{$method}();
       if(empty($html)) continue;
       
       $key = Str::snake($title).'_widget';
@@ -1219,6 +1244,7 @@ class TacoConfigBase {
    */
   private function defaultConfig() {
     return [
+      'classes' => null,
       'version_scss_file' => null,
       'timezone_local' => null,
       'timezone_prod' => null,
