@@ -58,6 +58,9 @@ At this time, CSS also outputs to the `_/dist` directory and does not output by 
 ### Optional git hooks for deploying `/dist` files:
 Run `init` from the taco theme root directory to setup git hooks.
 
+## Config
+[See config documentation](app/config/README.md)
+
 ## Deployment Instructions
 Until a site is live, development can happen on the `master` branch which can be auto-deployed to both the staging and production server.  Once it's launched however, development should be switched to the `develop` branch which is auto-deployed to the staging server.  The production server should run off the `master` branch and have deployment set to manual.
 

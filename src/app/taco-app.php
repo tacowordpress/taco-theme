@@ -1,33 +1,23 @@
 <?php
 
-// autoload vendor files (composer backend)
-require_once realpath(__DIR__.'/core/vendor/autoload.php');
+// Set error reporting level
+if(WP_DEBUG && WP_DEBUG_LEVEL) error_reporting(WP_DEBUG_LEVEL);
 
-// load frontend files from composer dir
-require_once __DIR__.'/core/CustomLoader.php';
-\TacoApp\CustomLoader::init();
+require_once __DIR__.'/config/TacoConfigBase.php';
+require_once __DIR__.'/config/TacoConfig.php';
+require_once __DIR__.'/TacoThemeUtil.php';
 
-// let's autoload some files
-// load the psr-4 autoloader class file
-require_once __DIR__.'/core/Psr4AutoloaderClass.php';
-$loader = new Psr4AutoloaderClass;
-$loader->register();
+// We have to init the config before loading classes, because they may need
+// access to user-defined constants
+TacoConfig::init();
 
-// assign namespaces and their corresponding autoload paths here
-$loader->addNamespace('\AppLibrary\\', __DIR__.'/lib/AppLibrary/src');
+require_once __DIR__.'/config/load-classes.php';
 
-// Initialize Taco
-\Taco\Loader::init();
+// We have to process the config after other classes are loaded, because some
+// methods use the Util classes, which aren't loaded until now
+TacoConfig::process();
 
+// TODO: test autoloading all classes to see if that solves the issue of having
+// to handle the config in two steps
 
-// traits
-require_once __DIR__.'/traits/Taquito.php';
-
-// settings
-require_once __DIR__.'/posts/AppOption.php';
-
-//posts
-require_once __DIR__.'/posts/Post.php';
-require_once __DIR__.'/posts/Page.php';
-
-//terms
+require_once __DIR__.'/config/init.php';
