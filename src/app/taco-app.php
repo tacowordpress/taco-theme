@@ -5,7 +5,6 @@ if(WP_DEBUG && WP_DEBUG_LEVEL) error_reporting(WP_DEBUG_LEVEL);
 
 require_once __DIR__.'/config/TacoConfigBase.php';
 require_once __DIR__.'/config/TacoConfig.php';
-require_once __DIR__.'/TacoThemeUtil.php';
 
 // We have to init the config before loading classes, because they may need
 // access to user-defined constants

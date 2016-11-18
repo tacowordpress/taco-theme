@@ -95,7 +95,7 @@ class TacoConfig extends TacoConfigBase {
       // Metadata
       'use_yoast' => true,
       'site_name' => 'Milbank Memorial Fund',
-      'page_title_separator' => ' | ', // TacoThemeUtil::pageTitleSeparator()
+      'page_title_separator' => ' | ',
       
       // Menus
       'menus' => [

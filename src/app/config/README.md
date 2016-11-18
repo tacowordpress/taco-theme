@@ -270,8 +270,6 @@ The following constants are defined by default.
 - `THEME_VERSION` (example: `12`)
 - `THEME_SUFFIX` (example: `?v=12`)
 
-Note: `TacoThemeUtil::fullURL()` yields the same result as `URL_REQUEST`.
-
 
 ## Creating menus
 

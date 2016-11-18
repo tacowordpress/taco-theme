@@ -35,5 +35,6 @@ class Html extends \Taco\Util\Html {}
 class Num extends \Taco\Util\Num {}
 class Obj extends \Taco\Util\Obj {}
 class Str extends \Taco\Util\Str {}
+class Theme extends \Taco\Util\Theme {}
 class View extends \Taco\Util\View {}
 class States extends \AppLibrary\States {}
