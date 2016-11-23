@@ -342,7 +342,7 @@ class ConfigBase {
     }
     
     $version_scss = file_get_contents($version_file_url);
-    preg_match('/^\$version\:\s+(\d+);/', $version_scss, $matches);
+    preg_match('/^\$version:\s+(\d+);/', $version_scss, $matches);
     $version_number = (int) $matches[1];
     $this->version_number = $version_number ?: $production_fallback_version;
     return true;
@@ -1192,7 +1192,7 @@ class ConfigBase {
    * @return string
    */
   private function normalizeAssetPath($path) {
-    return (preg_match('/^(https?\:|\/\/)/', $path))
+    return (preg_match('/^(https?:|\/\/)/', $path))
       ? $path
       : $this->themeURL().'/'.$path;
   }
