@@ -285,10 +285,10 @@ Note: Contrary to the example in the [Taco Util documentation](https://github.co
 
 ## Thumbnail sizes
 
-Define thumbnail sizes in the `thumbnails` option. Use the name as the key, with an array containing the width, height, and crop settings as the value.
+Define thumbnail sizes in the `thumbnail_sizes` option. Use the name as the key, with an array containing the width, height, and [crop settings](https://developer.wordpress.org/reference/functions/add_image_size/) as the value.
 
 ```php
-'thumbnails' => [
+'thumbnail_sizes' => [
   'excerpt' => [240, 240, true],
   'publication' => [240, 9999],
 ],

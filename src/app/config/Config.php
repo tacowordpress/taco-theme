@@ -58,7 +58,7 @@ class Config extends ConfigBase {
       'wrap_image_in_container' => 'image-container',
       'wrap_video_in_container' => 'video-container flex-video',
       'wrap_captioned_image_in_container' => 'captioned-image',
-      'thumbnails' => [
+      'thumbnail_sizes' => [
         'excerpt' => [240, 240, true],
         'publication' => [240, 9999],
       ],

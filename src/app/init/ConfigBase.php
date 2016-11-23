@@ -834,9 +834,9 @@ class ConfigBase {
    * Set thumbnail sizes
    */
   private function setThumbnailSizes() {
-    if(!Arr::iterable($this->thumbnails)) return false;
+    if(!Arr::iterable($this->thumbnail_sizes)) return false;
     
-    foreach($this->thumbnails as $key => $dimensions) {
+    foreach($this->thumbnail_sizes as $key => $dimensions) {
       list($width, $height, $crop) = array_pad($dimensions, 3, false);
       add_image_size($key, $width, $height, $crop);
     }
@@ -1270,7 +1270,7 @@ class ConfigBase {
       'wrap_image_in_container' => false,
       'wrap_video_in_container' => false,
       'wrap_captioned_image_in_container' => false,
-      'thumbnails' => null,
+      'thumbnail_sizes' => null,
       'app_icons_directory' => null,
       'singles_directory' => null,
       'views_directories' => null,
