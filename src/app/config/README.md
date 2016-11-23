@@ -139,6 +139,34 @@ Option | Type | Description
 `menus` | array | Menu constants and location names (see [Creating menus](#creating-menus))
 
 
+### CSS and JS options
+
+Option | Type | Description
+:----- | :--- | :----------
+`theme_css` | array | Paths to CSS files for styling the front-end
+`theme_js` | array | Paths to JS files to be loaded on the front-end
+`admin_css` | array | Paths to CSS files for styling the admin
+`editor_css` | array | Paths to CSS files for using custom styles in TinyMCE
+`login_css` | array | Paths to CSS files for styling the login page
+`admin_js` | array | Paths to JS files to be loaded in the admin
+
+See [Loading CSS and JS](#loading-css-and-js)
+
+
+### Image and video options
+
+Option | Type | Description
+:----- | :--- | :----------
+`disable_auto_embed` | boolean | Disable [automatic embedding](http://wordpress.stackexchange.com/q/211701)
+`disable_responsive_images` | boolean | Disable automatic responsive images using `srcset`
+`enable_featured_images` | boolean | Enable featured images (post thumbnails)
+`remove_size_from_image` | boolean | Omit `width` and `height` attributes from images when inserted into content (attributes may appear automatically after modifying image settings; see also `remove_size_from_element`)
+`wrap_image_in_container` | boolean/string | Wrap images inserted into content in a container, with an optional CSS class (see [Wrapping media in containers](#wrapping-media-in-containers))
+`wrap_video_in_container` | boolean/string | Wrap video elements inserted into content in a container, with an optional CSS class
+`wrap_captioned_image_in_container` | boolean/string | Wrap captioned images in a container, with an optional CSS class (the markup is different from the `wrap_image_in_container` option)
+`thumbnail_sizes` | array | Image thumbnail sizes (see [Thumbnail sizes](#thumbnail-sizes))
+
+
 ### Front-end options
 
 Option | Type | Description
@@ -146,22 +174,12 @@ Option | Type | Description
 `add_slug_to_body_class` | boolean | Add the current post slug to the body class
 `add_slug_to_menu_item_class` | boolean | Add the slug to each menu item
 `disable_emojis` | boolean | Disable emojis
-`disable_auto_embed` | boolean | Disable [automatic embedding](http://wordpress.stackexchange.com/q/211701)
-`disable_responsive_images` | boolean | Disable automatic responsive images using `srcset`
 `remove_extra_spaces` | boolean | Remove multiple consecutive spaces, empty paragraphs, and non-breaking spaces
 `remove_excerpt_wrapper` | boolean | Remove wrapping `p` tags from excerpts
-`remove_size_from_image` | boolean | Remove `width` and `height` attributes from images inserted into content
-`remove_size_from_element` | boolean | Remove `width` and `height` attributes from any element in post content
-`enable_featured_images` | boolean | Enable featured images (post thumbnails)
-`wrap_image_in_container` | boolean/string | Wrap images inserted into content in a container, with an optional CSS class
-`wrap_video_in_container` | boolean/string | Wrap video elements inserted into content in a container, with an optional CSS class
-`wrap_captioned_image_in_container` | boolean/string | Wrap captioned images in a container, with an optional CSS class (the markup is different from the `wrap_image_in_container` option)
-`thumbnails` | array | Image thumbnail sizes (see [Thumbnail sizes](#thumbnail-sizes))
+`remove_size_from_element` | boolean | Remove `width` and `height` attributes from any HTML element in content when rendered on the front-end (attributes may still exist in the database)
 `app_icons_directory` | string | Path to directory containing app icons and favicons
 `singles_directory` | string | Path to directory containing templates for singles
 `views_directories` | array | Paths to directories containing views, in the order in which they take precedence (see [Views directories](#views-directories))
-`theme_css` | array | Paths to CSS files for styling the front-end (see [Loading CSS and JS](#loading-css-and-js))
-`theme_js` | array | Paths to JS files to be loaded on the front-end
 
 
 ### Admin options
@@ -173,16 +191,12 @@ Option | Type | Description
 `restrict_admin_pages` | array | Admin pages that regular admin users (not the super admin) are forbidden from accessing
 `add_admin_pages` | array | Custom admin pages to add to the sidebar menu (see [Adding custom admin pages](#adding-custom-admin-pages))
 `hide_admin_bar` | boolean | Hide the admin bar when browsing the front-end while logged in
-`hide_update_notifications` | boolean | Hide core and plugin update notifications from regular admin users
+`hide_update_notifications` | boolean | Hide core and plugin update notifications from regular admin users (not the super admin)
 `remove_wordpress_link_from_login` | boolean | Remove the WordPress link from the logo on the login page
 `preserve_term_hierarchy` | boolean | Preserve the order of taxonomy terms, instead of moving selected terms to the top of the list   Prevent reordering selected taxonomy terms
 `disable_primary_term` | boolean | When Yoast is installed, disable its ability to designate one term applied to a post as the primary term, when multiple are selected (the primary term may optionally be used in page titles on posts that bypass WordPress routing)
 `dashboard_widgets` | array | List of static methods in `Config` that output HTML to be displayed on the dashboard (see [Dashboard widgets](#dashboard-widgets))
 `admin_menu_separators` | array | Indices where separators should be inserted in the admin sidebar menu (see the [default menu indices](https://developer.wordpress.org/reference/functions/add_menu_page/#menu-structure))
-`admin_css` | array | Paths to CSS files for styling the admin (see [Loading CSS and JS](#loading-css-and-js))
-`editor_css` | array | Paths to CSS files for using custom styles in TinyMCE
-`login_css` | array | Paths to CSS files for styling the login page
-`admin_js` | array | Paths to JS files to be loaded in the admin
 
 
 ### Metadata options
@@ -281,6 +295,22 @@ Assign any number of directories containing view files to the `views_directories
 Certain components (such as pagination) have default view files available in the boilerplate. These views can be overridden by providing your own view files in the theme-specific views directory, using the same paths and file names.
 
 Note: Contrary to the example in the [Taco Util documentation](https://github.com/tacowordpress/util#usage-of-the-view-class), specify the paths as relative to the theme directory, *not* the full path.
+
+
+## Wrapping media in containers
+
+The `wrap_image_in_container`, `wrap_video_in_container`, and `wrap_captioned_image_in_container` accept a boolean or string. To wrap the element in a basic `<div>`, pass `true`. To specify a CSS class for the container, pass a string containing the class.
+
+```php
+// Wrap images in a <div> without a class
+'wrap_image_in_container' => true,
+
+// Wrap images in a <div> with the specified class
+'wrap_video_in_container' => 'video-container flex-video',
+
+// Do not wrap captioned images
+'wrap_captioned_image_in_container' => false,
+```
 
 
 ## Thumbnail sizes
