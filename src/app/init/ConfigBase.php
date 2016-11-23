@@ -502,10 +502,8 @@ class ConfigBase {
     // Combine match groups into array
     $menu_items = array_combine($matches[1], $matches[2]);
     
-    // You probably don't want to do this, because menu items having the same
-    // names but different parents will end up with the same slug
-    $isolate_last_segment = false;
-    if($isolate_last_segment) {
+    if(!$this->preserve_hierarchy_in_menu_item_slug) {
+      // Isolate last segment of URL
       $menu_items = array_map(function($el){
         $slash_index = strrpos($el, '/');
         return ($slash_index)
@@ -1260,6 +1258,7 @@ class ConfigBase {
       // Front-end
       'add_slug_to_body_class' => false,
       'add_slug_to_menu_item_class' => false,
+      'preserve_hierarchy_in_menu_item_slug' => false,
       'disable_emojis' => false,
       'disable_auto_embed' => false,
       'disable_responsive_images' => false,

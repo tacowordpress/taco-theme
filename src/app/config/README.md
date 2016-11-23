@@ -173,6 +173,7 @@ Option | Type | Description
 :----- | :--- | :----------
 `add_slug_to_body_class` | boolean | Add the current post slug to the body class
 `add_slug_to_menu_item_class` | boolean | Add the slug to each menu item
+`preserve_hierarchy_in_menu_item_slug` | boolean | Prepend any parent menu items to the menu item slug (if there are menu items having the same names but different parents, setting this to `true` will prevent them from having the same slug)
 `disable_emojis` | boolean | Disable emojis
 `remove_extra_spaces` | boolean | Remove multiple consecutive spaces, empty paragraphs, and non-breaking spaces
 `remove_excerpt_wrapper` | boolean | Remove wrapping `p` tags from excerpts

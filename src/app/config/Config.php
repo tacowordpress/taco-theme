@@ -47,6 +47,7 @@ class Config extends ConfigBase {
       // Front-end
       'add_slug_to_body_class' => true,
       'add_slug_to_menu_item_class' => true,
+      'preserve_hierarchy_in_menu_item_slug' => true,
       'disable_emojis' => true,
       'disable_auto_embed' => true,
       'disable_responsive_images' => true,
