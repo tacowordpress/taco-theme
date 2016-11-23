@@ -812,7 +812,8 @@ class ConfigBase {
     
     if(!$this->remove_size_from_element) return false;
     
-    // This removes attributes for any element in the content, not just images
+    // This strips attributes from any element in the content (not just images)
+    // when rendered as HTML
     add_filter('the_content', function($html){
       return $this->removeSizeAttributes($html);
     });
@@ -825,7 +826,7 @@ class ConfigBase {
    * @return string
    */
   private function removeSizeAttributes($html) {
-    $html = preg_replace('/\s(?:width|height)="\d*"/', '', $html);
+    $html = preg_replace('/\s(?:width|height)=["\']\w*["\']/', '', $html);
     return $html;
   }
   
