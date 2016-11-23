@@ -23,7 +23,6 @@ class ConfigBase {
   
   public function __construct() {
     $this->setConfig();
-    $this->defineUserConstants($this->constants);
     
     // Wait to process until after other classes are loaded
     // $this->processConfig();
@@ -100,27 +99,22 @@ class ConfigBase {
    * Set all config options
    */
   private function setConfig() {
+    $user_constants = $this->constants();
+    $default_constants = $this->defaultConstants();
+    $this->defineConstants(array_merge($default_constants, $user_constants));
+    
     $this->config = array_merge(
-      $this->defaults(),
+      $this->defaultOptions(),
       $this->options(),
       ['classes' => $this->classes()],
-      ['constants' => $this->constants()]
+      ['constants' => $user_constants]
     );
-    return true;
-  }
-  
-  
-  /**
-   * Get config options
-   * @return array
-   */
-  protected function options() {
-    return [];
   }
   
   
   /**
    * Get Taco classes
+   * @link https://github.com/tacowordpress/taco-theme/tree/master/src/app/config#classes
    * @return array
    */
   protected function classes() {
@@ -130,9 +124,20 @@ class ConfigBase {
   
   /**
    * Get constants
+   * @link https://github.com/tacowordpress/taco-theme/tree/master/src/app/config#constants
    * @return array
    */
   protected function constants() {
+    return [];
+  }
+  
+  
+  /**
+   * Get config options
+   * @link https://github.com/tacowordpress/taco-theme/tree/master/src/app/config#options
+   * @return array
+   */
+  protected function options() {
     return [];
   }
   
@@ -159,12 +164,9 @@ class ConfigBase {
   private function processConfig() {
     $this->loadClasses();
     $this->setTimezone();
-    $this->defineDefaultConstants();
     $this->setSuperAdmin();
     $this->setSinglesDirectory();
     $this->setViewsDirectories();
-    // $this->defineUserConstants($this->constants);
-    
     $this->enableModifyingBodyClasses();
     $this->enableModifyingMenuClasses();
     $this->loadAssets();
@@ -377,33 +379,12 @@ class ConfigBase {
   
   
   /**
-   * Define default constants
-   */
-  private function defineDefaultConstants() {
-    $protocol = (
-      (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off')
-      || $_SERVER['SERVER_PORT'] == 443
-    ) ? 'https' : 'http';
-    
-    define('URL_BASE', sprintf('%s://%s', $protocol, $_SERVER['HTTP_HOST']));
-    define('URL_REQUEST', URL_BASE.$_SERVER['REQUEST_URI']);
-    
-    define('USER_SUPER_ADMIN', $this->super_admin);
-    
-    define('THEME_DIRECTORY', $this->themeDirectory());
-    define('THEME_URL', $this->themeURL());
-    define('THEME_VERSION', $this->versionNumber());
-    define('THEME_SUFFIX', '?v='.$this->versionNumber());
-  }
-  
-  
-  /**
-   * Define user constants
+   * Define constants
    * @param array $constants
    */
-  private function defineUserConstants($constants) {
+  private function defineConstants($constants) {
     // We can't use Arr here because the Util classes aren't loaded yet
-    // if(!Arr::iterable($this->constants)) return false;
+    // if(!Arr::iterable($constants)) return false;
     if(!is_array($constants) || empty($constants)) return false;
     
     foreach($constants as $key => $value) {
@@ -1054,7 +1035,7 @@ class ConfigBase {
         array_keys($this->menus),
         $menu_constant_values
       );
-      $this->defineUserConstants($menu_constants);
+      $this->defineConstants($menu_constants);
       
       $locations = array_combine(
         $menu_constant_values,
@@ -1244,10 +1225,32 @@ class ConfigBase {
   
   
   /**
-   * Get default config
+   * Get default constants
    * @return array
    */
-  private function defaults() {
+  private function defaultConstants() {
+    $protocol = (
+      (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off')
+      || $_SERVER['SERVER_PORT'] == 443
+    ) ? 'https' : 'http';
+    
+    return [
+      'URL_BASE' => sprintf('%s://%s', $protocol, $_SERVER['HTTP_HOST']),
+      'URL_REQUEST' => URL_BASE.$_SERVER['REQUEST_URI'],
+      'USER_SUPER_ADMIN' => $this->super_admin,
+      'THEME_DIRECTORY' => $this->themeDirectory(),
+      'THEME_URL' => $this->themeURL(),
+      'THEME_VERSION' => $this->versionNumber(),
+      'THEME_SUFFIX' => '?v='.$this->versionNumber(),
+    ];
+  }
+  
+  
+  /**
+   * Get default options
+   * @return array
+   */
+  private function defaultOptions() {
     return [
       'version_scss_file' => null,
       'timezone_local' => null,

@@ -7,6 +7,7 @@ class Config extends ConfigBase {
   
   /**
    * Get Taco classes
+   * @link https://github.com/tacowordpress/taco-theme/tree/master/src/app/config#classes
    * @return array
    */
   protected function classes() {
@@ -21,7 +22,20 @@ class Config extends ConfigBase {
   
   
   /**
+   * Get constants
+   * @link https://github.com/tacowordpress/taco-theme/tree/master/src/app/config#constants
+   * @return array
+   */
+  protected function constants() {
+    return [
+      // 'CONSTANT_NAME' => 'value',
+    ];
+  }
+  
+  
+  /**
    * Get config options
+   * @link https://github.com/tacowordpress/taco-theme/tree/master/src/app/config#options
    * @return array
    */
   protected function options() {
@@ -120,17 +134,6 @@ class Config extends ConfigBase {
         'MENU_RSG' => 'Reforming States Group',
         'MENU_QUARTERLY' => 'Quarterly',
       ],
-    ];
-  }
-  
-  
-  /**
-   * Get constants
-   * @return array
-   */
-  protected function constants() {
-    return [
-      // 'CONSTANT_NAME' => 'value',
     ];
   }
   
