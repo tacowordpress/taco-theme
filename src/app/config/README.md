@@ -10,15 +10,22 @@ Taco Config aims to simplify configuring options for a Taco WordPress site. In a
 Configuration is defined in just a few methods in the `Config` class. Here are some basic examples.
 
 ```php
-protected function setClasses() {
-  $this->config['classes'] = [
+protected function classes() {
+  return [
     'posts/Post.php',
     'posts/Page.php',
   ];
 }
 
-protected function setConfig() {
-  $this->config = [
+protected function constants() {
+  return [
+    'PAGE_ID_ABOUT' => 3,
+    'PAGE_ID_BLOG' => 14,
+  ];
+}
+
+protected function options() {
+  return [
     'version_scss_file' => '_/scss/_version.scss',
     'timezone_local' => 'America/Denver',
     'timezone_prod' => 'America/New_York',
@@ -27,10 +34,6 @@ protected function setConfig() {
     'site_name' => 'Example',
     'theme_css' => ['app' => '_/css/app.css'],
     'menus' => ['MENU_PRIMARY' => 'Primary'],
-    'constants' => [
-      'PAGE_ID_ABOUT' => 3,
-      'PAGE_ID_BLOG' => 14,
-    ],
   ];
 }
 ```
@@ -38,36 +41,21 @@ protected function setConfig() {
 
 ## How to configure a Taco site
 
-In `Config.php`, define the options for the site.
-
-```php
-protected function setClasses() {
-  $this->config['classes'] = [
-    // Set paths to Taco classes here
-  ];
-}
-
-protected function setConfig() {
-  $this->config = [
-    // Define options here
-  ];
-}
-```
-
-Consult the available [options](#options), or see `ConfigBase::defaultConfig()` for a complete list of options.
+In the `Config` class, define [classes](#classes), [constants](#constants), and [options](#options) for the site, using their respective methods.
 
 If needed, you can create other methods in the `Config` class to handle any functionality that feeds into the options you set. These methods can be private.
 
-If you need to execute anything beyond the scope of the standard options, use `Config::done()`. This is essentially a dumping ground for site-specific functionality that isn't supported by the existing options. You can add more filters, call more methods, whatever needs to be done.
+If you need to execute anything beyond the scope of the standard options, use `Config::done()`. This is essentially a dumping ground for site-specific functionality that isn't supported by the existing options. You can add more filters, call more methods, etc. Common use cases should be incorporated into `ConfigBase::defaultOptions()`.
 
+---
 
 ## Classes
 
-In the `classes` option, set the paths to Taco classes, relative to the `app` directory.
+In `Config::classes()`, set the paths to Taco classes, relative to the `app` directory.
 
 ```php
-protected function setClasses() {
-  $this->config['classes'] = [
+protected function classes() {
+  return [
     'traits/Taquito.php',
     'terms/Category.php',
     'posts/AppOption.php',
@@ -81,25 +69,74 @@ Note: Skip this step if your classes are autoloaded.
 
 ---
 
+## Constants
+
+In `Config::constants()`, you can define arbitrary global constants that will be available everywhere throughout the site.
+
+```php
+protected function constants() {
+  return [
+    'PAGE_ID_ABOUT' => 3,
+    'FORBIDDEN_USER_IDS' => [1, 8, 6, 9, 18896],
+    'SENDGRID_API_KEY' => '44vnm02vkhd9gvfn237',
+  ];
+}
+```
+
+You can then use these constants as you would any other constant, including within config options.
+
+```php
+$page = \Taco\Post\Factory::create(PAGE_ID_ABOUT);
+```
+
+Note: If you're running PHP 5.*, constants defined as arrays will be automatically serialized.
+
+
+### Default constants
+
+The following constants are defined by default.
+
+- `URL_BASE` (example: `http://example.com`)
+- `URL_REQUEST` (example: `http://example.com/with/full-url/?and=parameters`)
+- `USER_SUPER_ADMIN` (example: `super_admin_username`)
+- `THEME_DIRECTORY` (example: `/Users/patrick/Sites/example/html/wp-content/themes/taco-theme`)
+- `THEME_URL` (example: `http://example.com/wp-content/themes/taco-theme`)
+- `THEME_VERSION` (example: `12`)
+- `THEME_SUFFIX` (example: `?v=12`)
+
+---
+
 ## Options
 
-Options are defined as keys of the `config` property. Only the pre-defined keys are allowed, all other keys are ignored.
+Options are defined in `Config::options()`.
 
+```php
+protected function options() {
+  return [
+    'hide_admin_pages' => [
+      'comments',
+    ],
+    'hide_admin_bar' => true,
+    'admin_css' => '_/css/admin.css',
+    // ...
+  ];
+}
+```
+
+Note:
 - All options have default values that adhere as closely as possible to stock WordPress functionality.
-- In cases where the option accepts an array of scalar values without keys, you can also pass a single scalar value. For example, the `hide_admin_pages` accepts an array of strings, but you can also just pass a single string.
-- All file paths are relative to the theme directory.
+- In cases where the option accepts an array of scalar values without keys, you can also pass a single scalar value. For example, `hide_admin_pages` accepts an array of strings, but you can also just pass a single string.
+- File paths are relative to the theme directory.
 
 
 ### General options
 
 Option | Type | Description
 :----- | :--- | :----------
-`classes` | array | Paths to Taco class files, relative to the `app` directory
 `version_scss_file` | string | Path to a SCSS file containing a single variable `$version`, useful for busting cache
 `timezone_local` | string | Local time zone (see [time zones in PHP](http://php.net/manual/en/timezones.php))
 `timezone_prod` | string | Time zone for the production server
 `menus` | array | Menu constants and location names (see [Creating menus](#creating-menus))
-`constants` | array | List of arbitrary constants (see [Defining constants](#defining-constants))
 
 
 ### Front-end options
@@ -163,29 +200,23 @@ Option | Type | Description
 When specifying CSS files to be loaded in the theme or the admin (using the `theme_css`, `admin_css`, `editor_css`, and `login_css` options), you can set the option in a number of different formats.
 
 ```php
-// Single file, no media type
-$this->config = [
+return [
+  // Single file, no media type
   'theme_css' => '_/css/app.css',
-];
-
-// Multiple files, no media type, without keys
-$this->config = [
+  
+  // Multiple files, no media type, without keys
   'theme_css' => [
     '_/lib/foundation/css/foundation.css',
     '_/css/app.css',
   ],
-];
-
-// Multiple files, no media type, with named keys
-$this->config = [
+  
+  // Multiple files, no media type, with named keys
   'theme_css' => [
     'foundation' => '_/lib/foundation/css/foundation.css',
     'app' => '_/css/app.css',
   ],
-];
-
-// Multiple files, with media types
-$this->config = [
+  
+  // Multiple files, with media types
   'theme_css' => [
     'all' => [
       'foundation' => '_/lib/foundation/css/foundation.css',
@@ -200,21 +231,17 @@ $this->config = [
 Likewise, JS options (`theme_js` and `admin_js`) can be set as a string or array, with or without keys.
 
 ```php
-// Single file
-$this->config = [
+return [
+  // Single file
   'theme_js' => '_/js/app.js',
-];
-
-// Multiple files, without keys
-$this->config = [
+  
+  // Multiple files, without keys
   'theme_js' => [
     '_/lib/jquery/jquery-3.1.0.min.js',
     '_/js/app.js',
   ],
-];
-
-// Multiple files, with named keys
-$this->config = [
+  
+  // Multiple files, with named keys
   'theme_js' => [
     'jquery' => '_/lib/jquery/jquery-3.1.0.min.js',
     'main' => '_/js/app.js',
@@ -274,34 +301,6 @@ $this->config = [
   ],
 ];
 ```
-
-
-## Defining constants
-
-You can define arbitrary global constants that will be available everywhere throughout the site.
-
-```php
-$this->config = [
-  'constants' => [
-    'PAGE_ID_ABOUT' => 3,
-    'PAGE_ID_BLOG' => 14,
-    'SENDGRID_API_KEY' => '44vnm02vkhd9gvfn237',
-  ],
-];
-```
-
-
-### Default constants
-
-The following constants are defined by default.
-
-- `URL_BASE` (example: `http://example.com`)
-- `URL_REQUEST` (example: `http://example.com/with/full-url/?and=parameters`)
-- `USER_SUPER_ADMIN` (example: `super_admin_username`)
-- `THEME_DIRECTORY` (example: `/Users/patrick/Sites/example/html/wp-content/themes/taco-theme`)
-- `THEME_URL` (example: `http://example.com/wp-content/themes/taco-theme`)
-- `THEME_VERSION` (example: `12`)
-- `THEME_SUFFIX` (example: `?v=12`)
 
 
 ## Creating menus
