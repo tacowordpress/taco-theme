@@ -200,53 +200,49 @@ Option | Type | Description
 When specifying CSS files to be loaded in the theme or the admin (using the `theme_css`, `admin_css`, `editor_css`, and `login_css` options), you can set the option in a number of different formats.
 
 ```php
-return [
-  // Single file, no media type
-  'theme_css' => '_/css/app.css',
-  
-  // Multiple files, no media type, without keys
-  'theme_css' => [
-    '_/lib/foundation/css/foundation.css',
-    '_/css/app.css',
-  ],
-  
-  // Multiple files, no media type, with named keys
-  'theme_css' => [
+// Single file, no media type
+'theme_css' => '_/css/app.css',
+
+// Multiple files, no media type, without keys
+'theme_css' => [
+  '_/lib/foundation/css/foundation.css',
+  '_/css/app.css',
+],
+
+// Multiple files, no media type, with named keys
+'theme_css' => [
+  'foundation' => '_/lib/foundation/css/foundation.css',
+  'app' => '_/css/app.css',
+],
+
+// Multiple files, with media types
+'theme_css' => [
+  'all' => [
     'foundation' => '_/lib/foundation/css/foundation.css',
     'app' => '_/css/app.css',
   ],
-  
-  // Multiple files, with media types
-  'theme_css' => [
-    'all' => [
-      'foundation' => '_/lib/foundation/css/foundation.css',
-      'app' => '_/css/app.css',
-    ],
-    'screen' => '_/css/screen.css',
-    'print' => '_/css/print.css',
-  ],
-];
+  'screen' => '_/css/screen.css',
+  'print' => '_/css/print.css',
+],
 ```
 
 Likewise, JS options (`theme_js` and `admin_js`) can be set as a string or array, with or without keys.
 
 ```php
-return [
-  // Single file
-  'theme_js' => '_/js/app.js',
-  
-  // Multiple files, without keys
-  'theme_js' => [
-    '_/lib/jquery/jquery-3.1.0.min.js',
-    '_/js/app.js',
-  ],
-  
-  // Multiple files, with named keys
-  'theme_js' => [
-    'jquery' => '_/lib/jquery/jquery-3.1.0.min.js',
-    'main' => '_/js/app.js',
-  ],
-];
+// Single file
+'theme_js' => '_/js/app.js',
+
+// Multiple files, without keys
+'theme_js' => [
+  '_/lib/jquery/jquery-3.1.0.min.js',
+  '_/js/app.js',
+],
+
+// Multiple files, with named keys
+'theme_js' => [
+  'jquery' => '_/lib/jquery/jquery-3.1.0.min.js',
+  'main' => '_/js/app.js',
+],
 ```
 
 Note: In order for WordPress to deregister an existing script that you intend to override, the script's named key must match the script that's being overridden.
@@ -276,12 +272,10 @@ Note: `Config::modifyBodyClasses()` allows you to modify the array of body class
 Assign any number of directories containing view files to the `views_directories` option. You may have theme-specific views, as well as views included in the boilerplate for common elements. Specify the directories in the order in which they should be checked for view files.
 
 ```php
-$this->config = [
-  'views_directories' => [
-    'views',     // Theme-specific views directory
-    'app/views', // Fallback views directory
-  ],
-];
+'views_directories' => [
+  'views',     // Theme-specific views directory
+  'app/views', // Fallback views directory
+],
 ```
 
 Certain components (such as pagination) have default view files available in the boilerplate. These views can be overridden by providing your own view files in the theme-specific views directory, using the same paths and file names.
@@ -294,12 +288,10 @@ Note: Contrary to the example in the [Taco Util documentation](https://github.co
 Define thumbnail sizes in the `thumbnails` option. Use the name as the key, with an array containing the width, height, and crop settings as the value.
 
 ```php
-$this->config = [
-  'thumbnails' => [
-    'excerpt' => [240, 240, true],
-    'publication' => [240, 9999],
-  ],
-];
+'thumbnails' => [
+  'excerpt' => [240, 240, true],
+  'publication' => [240, 9999],
+],
 ```
 
 
@@ -308,17 +300,16 @@ $this->config = [
 Assign menu constants and location names to the `menus` option.
 
 ```php
-$this->config = [
-  'menus' => [
-    'MENU_PRIMARY' => 'Primary',
-    'MENU_Footer' => 'Footer',
-  ],
-];
+'menus' => [
+  'MENU_PRIMARY' => 'Primary',
+  'MENU_Footer' => 'Footer',
+],
 ```
 
 You can then use the constants in conjunction with `wp_nav_menu()`.
 
 ```php
+// In some-template.php
 wp_nav_menu([
   'theme_location' => MENU_PRIMARY,
   'container' => false,
@@ -352,11 +343,9 @@ Note: The Menus page can't be hidden when it is a submenu item under Appearance.
 To add a page to the admin sidebar menu, assign an array to the `add_admin_pages` option. Use the page name as the key, and the URL to the page as the value.
 
 ```php
-$this->config = [
-  'add_admin_pages' => [
-    'Redirects' => 'tools.php?page=redirection.php',
-  ],
-];
+'add_admin_pages' => [
+  'Redirects' => 'tools.php?page=redirection.php',
+],
 ```
 
 This can be useful when you want to restrict access to a parent page, but allow access to specific sub-pages.
@@ -364,17 +353,15 @@ This can be useful when you want to restrict access to a parent page, but allow 
 
 ## Dashboard widgets
 
-To add a widget to the admin dashboard, assign an array to the `dashboard_widgets` option. Use the widget name as the key, and the name of a public method in `Config` as the value.
+To add a widget to the admin dashboard, assign an array to the `dashboard_widgets` option. Use the widget name as the key, and the name of a public method in the `Config` class as the value.
 
 ```php
-$this->config = [
-  'dashboard_widgets' => [
-    'Documentation' => 'documentationWidget',
-  ],
-];
+'dashboard_widgets' => [
+  'Documentation' => 'documentationWidget',
+],
 ```
 
-Then create a public method with the same name, which should return an HTML string.
+Then create a public static method with the same name, which should return an HTML string.
 
 ```php
 public static function documentationWidget() {
