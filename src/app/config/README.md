@@ -260,7 +260,7 @@ Likewise, JS options (`theme_js` and `admin_js`) can be set as a string or array
 ],
 ```
 
-Note: In order for WordPress to deregister an existing script that you intend to override, the script's named key must match the script that's being overridden.
+Note: In order for WordPress to deregister an existing script that you intend to override (such as may be the case with jQuery), the script's named key must match the script that's being overridden.
 
 
 ## Customizing body and menu classes
@@ -300,7 +300,7 @@ Note: Contrary to the example in the [Taco Util documentation](https://github.co
 
 ## Wrapping media in containers
 
-The `wrap_image_in_container`, `wrap_video_in_container`, and `wrap_captioned_image_in_container` accept a boolean or string. To wrap the element in a basic `<div>`, pass `true`. To specify a CSS class for the container, pass a string containing the class.
+The `wrap_image_in_container`, `wrap_video_in_container`, and `wrap_captioned_image_in_container` options can accept a boolean or string. To wrap the element in a basic `<div>`, pass `true`. To specify a CSS class for the container, pass a string containing the class.
 
 ```php
 // Wrap images in a <div> without a class
@@ -366,7 +366,7 @@ The `hide_admin_pages` and `restrict_admin_pages` options each accept an array o
 
 If you choose to hide Appearance, the Menus page will automatically be added back to the sidebar menu, as it most likely needs to be accessible to all admin users. To also hide the Menus page, pass both `appearance` and `menus` to the relevant option.
 
-Note: The Menus page can't be hidden when it is a submenu item under Appearance.
+Note: The Menus page can't be hidden when it is a child of the Appearance page.
 
 
 ## Adding custom admin pages
