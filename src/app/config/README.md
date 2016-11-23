@@ -399,3 +399,21 @@ public static function documentationWidget() {
 }
 ```
 
+
+## Retrieving config values
+
+Although most options are meant to be set once and forgotten, retrieving an option from the config is occasionally useful.
+
+```php
+// These all yield the same result
+$time_zone = Config::instance()->timezone_prod;
+$time_zone = Config::get()->timezone_prod;
+$time_zone = Config::get('timezone_prod');
+```
+
+You can access constants defined in the config as you would any other constant.
+
+```php
+$page = \Taco\Post\Factory::create(PAGE_ID_ABOUT);
+```
+
