@@ -1,0 +1,3 @@
+@function path_img($path) {
+  @return unquote(url('../../img/#{$path}?v=#{$version}'));
+}

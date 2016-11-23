@@ -5,6 +5,29 @@ const WebpackNotifierPlugin = require('webpack-notifier');
 const webpack               = require('webpack');
 const fs                    = require('fs');
 const path                  = require('path');
+const merge                 = require('merge');
+
+function EmitHash(options) {
+  this.options = merge({}, {
+    outputPath: '',
+    outputFileName: '',
+  }, options);
+}
+
+EmitHash.prototype.apply = function(compiler) {
+  compiler.plugin('after-emit', function(compilation, callback) {
+    let output_file = path.join(this.options.outputPath, this.options.outputFileName);
+
+    fs.writeFileSync(
+      output_file,
+      compilation.getStats().hash
+    );
+
+    callback();
+
+    console.log('Writing hash file: ' + output_file);
+  }.bind(this));
+}
 
 let is_production = false;
 process.argv.forEach(function(arg) {
@@ -14,7 +37,7 @@ process.argv.forEach(function(arg) {
 });
 
 let source_path = __dirname + '/_/src/js/';
-let output_path = __dirname + '/_/';
+let output_path = __dirname + '/_/dist/';
 
 let node_dir = __dirname + '/node_modules/';
 
@@ -44,9 +67,10 @@ let config = {
     this.entry[name] = [name];
   },
   entry: entry_points,
+  debug: !is_production,
   devtool: is_production ? 'none' : 'source-map',
   output: {
-    path: output_path + 'dist/',
+    path: output_path,
     filename: '[name]' + '.js'
   },
   resolve: { alias: {} },
@@ -65,6 +89,7 @@ let config = {
         loader: 'babel-loader',
         query: {
           presets: ['es2015', 'react'],
+          retainLines: true,
         },
       },
     ],
@@ -82,15 +107,19 @@ let config = {
     new webpack.ProvidePlugin({
       '$': 'jquery',
       'jQuery': 'jquery',
-      '_': 'lodash/core',
+      '_': 'lodash',
     }),
     new webpack.DefinePlugin({
       CONFIG: CONFIG,
+    }),
+    new EmitHash({
+      outputPath: output_path,
+      outputFileName: 'webpack_hash',
     }),
   ],
 };
 
 config.add_vendor('jquery', node_dir + 'jquery/dist/jquery' + (is_production === true ? '.min' : '') +  '.js');
-config.add_vendor('lodash', node_dir + 'lodash/core' + (is_production === true ? '.min' : '') +  '.js');
+config.add_vendor('lodash', node_dir + 'lodash/lodash' + (is_production === true ? '.min' : '') +  '.js');
 
 module.exports = config;

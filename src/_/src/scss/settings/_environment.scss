@@ -1,0 +1,9 @@
+$output_rem: true;
+$output_em_queries: true;
+$output_query_comments: false;
+
+@if ($ENVIRONMENT == "development") {
+  $output_rem: false;
+  $output_em_queries: true;
+  $output_query_comments: true;
+}

@@ -1,25 +1,32 @@
 //this gets roped into cache busting as described on config.php
 $version: 1;
 
-// definitions
-@import "fonts";
-@import "colors";
-@import "mixins";
+// settings
+@import "settings/environment";
+@import "settings/colors";
+@import "settings/typography";
 
-// global typography
-@import "typography";
+// util functions
+@import "util/functions";
+@import "util/mixins";
+@import "util/breakbeat";
+@import "util/remedy";
 
-// define the overall styles for templates
-@import "theme";
+// foundation
+// @import 'settings/foundation';
+@import "global/foundation";
 
-// define modular styles
-@import "module";
+// global styles
+@import "global/mixins";
+@import "global/dev";
+@import "global/colors";
+@import "global/typography";
+@import "global/theme";
 
+// components
 
-//@import "modal";
+// global components
+@import "global/header";
+@import "global/footer";
 
-
-// media queries for breakpoints last
-@import "mobile";
-
-@import "foundation";
+@import "pages/why-honestly-bare";

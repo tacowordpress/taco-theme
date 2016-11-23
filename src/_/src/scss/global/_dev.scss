@@ -1,0 +1,26 @@
+body.dev {
+  #breakpoint-detector {
+    position: fixed;
+    left: r(0);
+    bottom: r(30px);
+    z-index: 99999;
+    display: block;
+    padding: r(4px 9px);
+    background: #f00;
+    color: #fff;
+    font-size: r(16px);
+
+    &::before {
+      display: inline-block;
+    }
+  }
+}
+
+#breakpoint-detector::before {
+  display: none;
+  @each $breakpoint in $breakpoint-classes {
+    @include b('>= #{$breakpoint}') {
+      content: '#{$breakpoint}';
+    }
+  }
+}

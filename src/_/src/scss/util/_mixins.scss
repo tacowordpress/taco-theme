@@ -1,0 +1,12 @@
+// Include responsive queries based on a property and a map of values
+@mixin property($property, $values) {
+  @each $breakpoint, $value in $values {
+    @if $breakpoint == 'tiny' {
+      #{$property}: $value;
+    } @else {
+      @include b('>= ' + $breakpoint) {
+        #{$property}: $value;
+      }
+    }
+  }
+}

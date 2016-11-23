@@ -1,11 +1,13 @@
-body {
-  background: yellow;
-}
-
 /* ===== sticky footer ===== */
 html, body {
   height: 100%;
 }
+
+body {
+  background-color: $orange_medium;
+}
+
+#main,
 .page-wrap {
   min-height: 80%;
   overflow-y: visible;
