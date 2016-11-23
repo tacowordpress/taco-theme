@@ -391,7 +391,7 @@ class ConfigBase {
       // Also can't use Str here for the same reason as above
       // $key = Str::constant($key);
       if(!defined($key)) {
-        if(is_array($value)) {
+        if(is_array($value) && PHP_MAJOR_VERSION < 7) {
           $value = serialize($value);
         }
         define($key, $value);
