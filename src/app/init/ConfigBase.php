@@ -22,10 +22,7 @@ class ConfigBase {
   
   
   public function __construct() {
-    $this->setDefaults();
     $this->setConfig();
-    $this->setClasses();
-    $this->setConstants();
     $this->defineUserConstants($this->constants);
     
     // Wait to process until after other classes are loaded
@@ -100,26 +97,43 @@ class ConfigBase {
   
   
   /**
-   * Set classes
+   * Set all config options
    */
-  protected function setClasses() {
+  private function setConfig() {
+    $this->config = array_merge(
+      $this->defaults(),
+      $this->options(),
+      ['classes' => $this->classes()],
+      ['constants' => $this->constants()]
+    );
     return true;
   }
   
   
   /**
-   * Set config options
+   * Get config options
+   * @return array
    */
-  protected function setConfig() {
-    return true;
+  protected function options() {
+    return [];
   }
   
   
   /**
-   * Set constants
+   * Get Taco classes
+   * @return array
    */
-  protected function setConstants() {
-    return true;
+  protected function classes() {
+    return [];
+  }
+  
+  
+  /**
+   * Get constants
+   * @return array
+   */
+  protected function constants() {
+    return [];
   }
   
   
@@ -462,7 +476,6 @@ class ConfigBase {
   private function postSlugForBodyClass() {
     global $post;
     
-    $file_name = basename($_SERVER['SCRIPT_FILENAME'], '.php');
     $queried_object = get_queried_object();
     $is_term = (
       is_object($queried_object)
@@ -475,6 +488,7 @@ class ConfigBase {
       $template_name = basename(get_page_template(), '.php');
       $classes[] = Str::chain($template_name);
     } else {
+      $file_name = basename($_SERVER['SCRIPT_FILENAME'], '.php');
       $classes[] = Str::chain($file_name);
     }
     return $classes;
@@ -1230,21 +1244,11 @@ class ConfigBase {
   
   
   /**
-   * Set default config
-   */
-  private function setDefaults() {
-    $this->config = $this->defaultConfig();
-    return true;
-  }
-  
-  
-  /**
    * Get default config
    * @return array
    */
-  private function defaultConfig() {
+  private function defaults() {
     return [
-      'classes' => null,
       'version_scss_file' => null,
       'timezone_local' => null,
       'timezone_prod' => null,
@@ -1294,6 +1298,9 @@ class ConfigBase {
       
       // Menus
       'menus' => null,
+      
+      // Taco classes
+      'classes' => null,
       
       // Global constants
       'constants' => null,

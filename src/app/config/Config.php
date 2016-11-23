@@ -6,10 +6,11 @@ use \Taco\Util\View as View;
 class Config extends ConfigBase {
   
   /**
-   * Set classes
+   * Get Taco classes
+   * @return array
    */
-  protected function setClasses() {
-    $this->config['classes'] = [
+  protected function classes() {
+    return [
       'traits/Taquito.php',
       'terms/Category.php',
       'posts/AppOption.php',
@@ -20,10 +21,11 @@ class Config extends ConfigBase {
   
   
   /**
-   * Set config options
+   * Get config options
+   * @return array
    */
-  protected function setConfig() {
-    $this->config = [
+  protected function options() {
+    return [
       'version_scss_file' => '_/scss/_version.scss',
       'timezone_local' => 'America/Denver',
       'timezone_prod' => 'America/New_York',
@@ -123,10 +125,11 @@ class Config extends ConfigBase {
   
   
   /**
-   * Set constants
+   * Get constants
+   * @return array
    */
-  protected function setConstants() {
-    $this->config['constants'] = [
+  protected function constants() {
+    return [
       // 'CONSTANT_NAME' => 'value',
     ];
   }
