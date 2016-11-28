@@ -1,7 +1,4 @@
 <!doctype html>
-<?php
-$theme = AppOption::getInstance();
-?>
 <html class="no-js" <?php language_attributes(); ?>>
 <head>
   <meta charset="<?php bloginfo('charset'); ?>">
@@ -24,4 +21,8 @@ $theme = AppOption::getInstance();
 <?php global $body_class; ?>
 <body <?php body_class((isset($body_class)) ? $body_class : null); ?>>
 
-<?php include __DIR__.'/incl-google-tag-manager.php'; ?>
+<?php
+echo View::make('meta/google-tag-manager', [
+  'account' => AppOption::getInstance()->analytics_tag_manager_key
+]);
+?>
