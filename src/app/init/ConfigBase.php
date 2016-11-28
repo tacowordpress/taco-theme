@@ -167,6 +167,7 @@ class ConfigBase {
     $this->setSuperAdmin();
     $this->setSinglesDirectory();
     $this->setViewsDirectories();
+    $this->setViewsErrorReporting();
     $this->enableModifyingBodyClasses();
     $this->enableModifyingMenuClasses();
     $this->loadAssets();
@@ -293,6 +294,14 @@ class ConfigBase {
     
     View::setDirectories($directories);
     return true;
+  }
+  
+  
+  /**
+   * Set error reporting for views by environment
+   */
+  private function setViewsErrorReporting() {
+    View::setErrorReporting(ENVIRONMENT !== ENVIRONMENT_PROD);
   }
   
   
