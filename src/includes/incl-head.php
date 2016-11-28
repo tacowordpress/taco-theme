@@ -12,7 +12,7 @@
   <?php echo Theme::appIcons(); ?>
   <?php echo Theme::pageMeta(); ?>
 
-  <script src="<?php echo get_asset_path('lib/modernizr/modernizr.js'); ?>"></script>
+  <script src="<?php echo Theme::asset('lib/modernizr/modernizr.js'); ?>"></script>
 
   <?php wp_head(); ?>
 

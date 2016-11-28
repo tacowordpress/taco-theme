@@ -637,7 +637,7 @@ class ConfigBase {
   private function loadLoginStyles() {
     $this->loadStyles('login');
     // add_action('login_head', function(){
-    //   wp_enqueue_style('login_css', get_asset_path($this->login_css, false));
+    //   wp_enqueue_style('login_css', Theme::asset($this->login_css, false));
     // });
   }
   private function loadLoginScripts() {
