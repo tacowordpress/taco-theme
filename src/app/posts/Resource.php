@@ -1,6 +1,6 @@
 <?php
 
-class Resource extends \Taco\Post {
+class Resource extends _Post {
   public function getFields() {
 
     return array(

@@ -1,6 +1,6 @@
 <?php
 
-class Post extends \Taco\Post {
+class Post extends _Post {
 
   public function getFields() {
     return array(
