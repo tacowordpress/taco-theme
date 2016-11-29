@@ -498,12 +498,7 @@ class ConfigBase {
    */
   private function addSlugToMenuItemClass($menu_html) {
     global $post;
-    $this_post = $post;
-    
-    // Create Taco post only if $post is not already a Taco object
-    if(Obj::iterable($post) && !is_subclass_of($post, 'Taco\Base')) {
-      $this_post = \Taco\Post\Factory::create($post, false);
-    }
+    $this_post = \Taco\Post\Factory::create($post, false);
     
     // Get menu item IDs and link slugs
     preg_match_all('/menu-item-(\d+).*href="(?:(?:.*?)\/\/(?:.*?))?\/(.*?)\/?"/', $menu_html, $matches);
