@@ -31,6 +31,7 @@ class Page extends _Post {
     }
 
     return array_merge(
+      parent::getFields(),
       $this->getDefaultFields(),
       $fields_by_template
     );
