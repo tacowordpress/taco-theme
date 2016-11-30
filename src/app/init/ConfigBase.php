@@ -868,7 +868,7 @@ class ConfigBase {
       $container_class = '';
     }
     add_filter('embed_oembed_html', function($html) use ($container_class){
-      return View::make('media/video', [
+      return View::make('media/wrapped-video', [
         'container_class' => $container_class,
         'html' => $html,
       ]);
@@ -887,11 +887,19 @@ class ConfigBase {
       $container_class = '';
     }
     add_filter('the_content', function($content) use ($container_class){
-      return preg_replace(
-        '/<p>\s*(<a .*?>)?\s*(<img .+?(?:\s*\/)?>)\s*(<\/a>)?\s*<\/p>/iU',
-        '<div class="'.$container_class.'">\1\2\3</div>',
-        $content
-      );
+      preg_match_all('/<p>\s*(<a .*?>)?\s*(<img [^>]+?(?:\s*\/)?>)\s*(<\/a>)?\s*<\/p>/iU', $content, $matches, PREG_SET_ORDER);
+      
+      foreach($matches as $match) {
+        $match = array_pad($match, 4, '');
+        list($original_html, $link_open, $image, $link_close) = $match;
+        $image_view = View::make('media/wrapped-image', [
+          'container_class' => $container_class,
+          'html' => $link_open.$image.$link_close,
+        ]);
+        $content = str_replace($original_html, $image_view, $content);
+      }
+      
+      return $content;
     });
   }
   
