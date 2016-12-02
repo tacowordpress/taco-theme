@@ -21,7 +21,7 @@
     "webpack-notifier": "^1.3.0"
   },
   "scripts": {
-    "start": "webpack --watch -d",
+    "start": "webpack --watch",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {

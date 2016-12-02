@@ -68,7 +68,7 @@ let config = {
   },
   entry: entry_points,
   debug: !is_production,
-  devtool: is_production ? 'none' : 'source-map',
+  devtool: is_production ? 'none' : 'cheap-eval-source-map',
   output: {
     path: output_path,
     filename: '[name]' + '.js'
