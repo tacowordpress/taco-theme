@@ -1,6 +1,8 @@
 <?php
 
 class _Post extends \Taco\Post {
+  use Pagination;
+  
   
   public static function isLoadable() {
     return (static::class !== __CLASS__);
