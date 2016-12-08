@@ -191,6 +191,7 @@ class ConfigBase {
     $this->addCustomAdminPages();
     $this->registerMenus();
     $this->createDashboardWidgets();
+    $this->disableEditorFormats();
     $this->hideAdminPages($this->hide_admin_pages);
     $this->restrictAdminPages(array_unique(array_merge(
       $this->restrict_admin_pages,
@@ -1080,6 +1081,38 @@ class ConfigBase {
   
   
   /**
+   * Remove HTML tags from WYSIWYG format dropdown
+   */
+  private function disableEditorFormats() {
+    $disable_formats = $this->disable_wysiwyg_formats;
+    if(!($disable_formats = $this->validateString($disable_formats))) return false;
+    if(!is_admin()) return false;
+    
+    $all_formats = [
+      'p' => 'Paragraph',
+      'h2' => 'Heading 2',
+      'h3' => 'Heading 3',
+      'h4' => 'Heading 4',
+      'h5' => 'Heading 5',
+      'h6' => 'Heading 6',
+      'pre' => 'Preformatted',
+    ];
+    
+    $enabled_formats = [];
+    foreach($all_formats as $tag => $label) {
+      if(!in_array($tag, $disable_formats)) {
+        $enabled_formats[] = $label.'='.$tag;
+      }
+    }
+    
+    add_filter('tiny_mce_before_init', function($settings) use ($enabled_formats){
+      $settings['block_formats'] = join(';', $enabled_formats);
+      return $settings;
+    });
+  }
+  
+  
+  /**
    * Hide admin pages
    * @param array $pages
    * @param bool $hide_from_regular_admin_only
@@ -1301,6 +1334,7 @@ class ConfigBase {
       'disable_primary_term' => false,
       'dashboard_widgets' => null,
       'admin_menu_separators' => null,
+      'disable_wysiwyg_formats' => null,
       'admin_css' => null,
       'editor_css' => null,
       'login_css' => null,

@@ -65,7 +65,7 @@ protected function classes() {
 }
 ```
 
-Note: Skip this step if your classes are autoloaded.
+Note: Skip this step if your site-specific Taco classes are autoloaded.
 
 ---
 
@@ -198,6 +198,7 @@ Option | Type | Description
 `disable_primary_term` | boolean | When Yoast is installed, disable its ability to designate one term applied to a post as the primary term, when multiple are selected (the primary term may optionally be used in page titles on posts that bypass WordPress routing)
 `dashboard_widgets` | array | List of static methods in `Config` that output HTML to be displayed on the dashboard (see [Dashboard widgets](#dashboard-widgets))
 `admin_menu_separators` | array | Indices where separators should be inserted in the admin sidebar menu (see the [default menu indices](https://developer.wordpress.org/reference/functions/add_menu_page/#menu-structure))
+`disable_wysiwyg_formats` | array | HTML tags to remove from format dropdown (see [Customizing the WYSIWYG editor](#customizing-the-wysiwyg-editor))
 
 
 ### Metadata options
@@ -398,6 +399,15 @@ Then create a public static method with the same name, which should return an HT
 public static function documentationWidget() {
   return View::make('admin/dashboard/documentation');
 }
+```
+
+
+## Customizing the WYSIWYG editor
+
+Using the `disable_formats` option, you can remove any of the following HTML tags from the format dropdown: `p`, `h1`, `h2`, `h3`, `h4`, `h5`, `h6`, `pre`
+
+```php 
+'disable_wysiwyg_formats' => ['h1', 'pre'],
 ```
 
 
