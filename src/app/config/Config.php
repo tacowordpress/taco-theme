@@ -6,7 +6,7 @@ use \Taco\Util\View as View;
 class Config extends ConfigBase {
   
   /**
-   * Get Taco classes
+   * Get Taco classes and traits
    * @link https://github.com/tacowordpress/taco-theme/tree/master/src/app/config#classes
    * @return array
    */
@@ -42,26 +42,25 @@ class Config extends ConfigBase {
     return [
       'version_scss_file' => '_/scss/_version.scss',
       'timezone_local' => 'America/Denver',
-      'timezone_prod' => 'America/New_York',
+      'timezone_prod' => 'America/Denver',
       
       // Front-end
-      'add_slug_to_body_class' => true,
-      'add_slug_to_menu_item_class' => true,
-      'preserve_hierarchy_in_menu_item_slug' => true,
-      'disable_emojis' => true,
-      'disable_auto_embed' => true,
-      'disable_responsive_images' => true,
-      'remove_extra_spaces' => true,
+      'add_slug_to_body_class' => false,
+      'add_slug_to_menu_item_class' => false,
+      'preserve_hierarchy_in_menu_item_slug' => false,
+      'disable_emojis' => false,
+      'disable_auto_embed' => false,
+      'disable_responsive_images' => false,
+      'remove_extra_spaces' => false,
       'remove_excerpt_wrapper' => false,
-      'remove_size_from_image' => true,
-      'remove_size_from_element' => true,
-      'enable_featured_images' => true,
-      'wrap_image_in_container' => 'image-container',
-      'wrap_video_in_container' => 'video-container flex-video',
-      'wrap_captioned_image_in_container' => 'captioned-image',
+      'remove_size_from_image' => false,
+      'remove_size_from_element' => false,
+      'enable_featured_images' => false,
+      'wrap_image_in_container' => false,
+      'wrap_video_in_container' => false,
+      'wrap_captioned_image_in_container' => false,
       'thumbnail_sizes' => [
-        'excerpt' => [240, 240, true],
-        'publication' => [240, 9999],
+        // 'name' => [width, height, crop],
       ],
       'app_icons_directory' => '_/img/app-icons',
       'singles_directory' => 'singles',
@@ -71,16 +70,13 @@ class Config extends ConfigBase {
       ],
       'theme_css' => [
         'all' => [
-          // 'foundation' => '_/lib/foundation/css/foundation.css',
-          'font_awesome' => '_/lib/font-awesome-4.6.3/css/font-awesome.min.css',
           'app' => (ENVIRONMENT === ENVIRONMENT_PROD)
             ? '_/css/app.css'
             : '_/css/app-dev.css',
         ],
       ],
       'theme_js' => [
-        'jquery' => '_/lib/jquery/jquery-3.1.0.min.js',
-        'main' => '_/js/app.js',
+        // 'main' => '_/js/app.js',
       ],
       
       // Admin
@@ -92,48 +88,42 @@ class Config extends ConfigBase {
         'comments',
         'appearance',
         'plugins',
-        // 'users',
+        'users',
         'tools',
         'settings',
       ],
-      'add_admin_pages' => [
-        // 'Redirects' => 'tools.php?page=redirection.php',
-      ],
-      'hide_admin_bar' => true,
-      'hide_update_notifications' => true,
-      'remove_wordpress_link_from_login' => true,
+      'add_admin_pages' => null,
+      'hide_admin_bar' => false,
+      'hide_update_notifications' => false,
+      'remove_wordpress_link_from_login' => false,
       'preserve_term_hierarchy' => false,
       'disable_primary_term' => false,
-      'dashboard_widgets' => [
-        'Documentation' => 'documentationWidget',
-      ],
-      'admin_menu_separators' => [21],
+      'dashboard_widgets' => null,
+      'admin_menu_separators' => null,
+      'disable_wysiwyg_formats' => null,
       'admin_css' => [
         'all' => [
-          'admin' => '_/css/admin.css',
-          'autocomplete' => 'app/lib/autocomplete/autocomplete.css',
+          // 'admin' => '_/css/admin.css',
         ],
       ],
       'editor_css' => [
-        '_/css/editor.css',
+        // '_/css/editor.css',
       ],
       'login_css' => [
-        '_/css/login.css',
+        // '_/css/login.css',
       ],
       'admin_js' => [
-        'autocomplete' => 'app/lib/autocomplete/autocomplete.js',
+        // '_/js/admin.js',
       ],
       
       // Metadata
       'use_yoast' => true,
-      'site_name' => 'Milbank Memorial Fund',
+      'site_name' => 'Site Name',
       'page_title_separator' => ' | ',
       
       // Menus
       'menus' => [
-        'MENU_PRIMARY' => 'Primary',
-        'MENU_RSG' => 'Reforming States Group',
-        'MENU_QUARTERLY' => 'Quarterly',
+        // 'MENU_PRIMARY' => 'Primary',
       ],
     ];
   }
