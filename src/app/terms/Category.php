@@ -3,7 +3,8 @@
 class Category extends _Term {
   
   public function getFields() {
-    return [];
+    return array_merge(parent::getFields(), [
+    ]);
   }
   
 }

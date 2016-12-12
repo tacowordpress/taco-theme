@@ -3,9 +3,9 @@
 class Post extends _Post {
 
   public function getFields() {
-    return array(
-      'created_for_testing' => array('type' => 'checkbox')
-    );
+    return array_merge(parent::getFields(), [
+      'created_for_testing' => array('type' => 'checkbox'),
+    ]);
   }
 
   public function getSingular() {
