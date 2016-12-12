@@ -36,13 +36,9 @@ class _Post extends \Taco\Post {
    * @return array
    */
   public static function getSubclasses() {
-    $subclasses = [];
-    foreach(get_declared_classes() as $class) {
-      if(is_subclass_of($class, static::class)) {
-        $subclasses[] = $class;
-      }
-    }
-    return $subclasses;
+    return array_filter(get_declared_classes(), function($class){
+      return is_subclass_of($class, static::class);
+    });
   }
   
 }
