@@ -4,11 +4,6 @@ class _Post extends \Taco\Post {
   use Pagination;
   
   
-  public static function isLoadable() {
-    return (static::class !== __CLASS__);
-  }
-  
-  
   public function getFields() {
     return [];
   }
@@ -24,8 +19,13 @@ class _Post extends \Taco\Post {
   }
   
   
+  public static function isLoadable() {
+    return (static::class !== self::class);
+  }
+  
+  
   public function getPostTypeConfig() {
-    if(static::class === __CLASS__) return null;
+    if(!self::isLoadable()) return null;
     
     return parent::getPostTypeConfig();
   }
