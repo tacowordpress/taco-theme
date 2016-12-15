@@ -9,6 +9,7 @@ $theme = AppOption::getInstance();
   <title><?php echo app_get_page_title(); ?></title>
 
   <?php include __DIR__.'/incl-open-graph-meta.php'; ?>
+  <?php include __DIR__.'/incl-google-tag-manager.php'; ?>
 
   <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1">
 
@@ -25,4 +26,4 @@ $theme = AppOption::getInstance();
 <?php global $body_class; ?>
 <body <?php body_class((isset($body_class)) ? $body_class : null); ?>>
 
-<?php include __DIR__.'/incl-google-tag-manager.php'; ?>
+<?php include __DIR__.'/incl-google-tag-manager-noscript.php'; ?>
