@@ -1,163 +1,306 @@
+// Colors
+$admin_blue_dark: #21759b;
+$admin_blue_light: #2ea2cc;
+
+// Dimensions
+$admin_icon_width: 36px;
+$admin_thumbnail_size: 100px;
+$field_label_width: 192px;
+$addmany_field_label_width: 130px;
+
+// Make "Search Engines Discouraged" more visible
+$highlight_search_engines_discouraged: true;
+
+// Remove space for icon next to custom post type
+$hide_post_type_icons: true;
+
+// Reduce opacity of private posts
+$dim_private_posts: true;
+
+// Prevent large images from wrecking post list and edit page
+$prevent_large_images: true;
+
+// Improve size, spacing, and alignment of wysiwyg meta fields
+$improve_wysiwyg_appearance: true;
+
+// Make required fields more obvious
+$highlight_required_fields: true;
+
+// Make meta fields easier to read
+$improve_meta_field_appearance: true;
+
+// Improve layout of image and file meta fields
+$improve_file_field_appearance: true;
+
+// Hide standard "Description" field on term edit page, potentially in favor of
+// using a custom meta field on the term
+$hide_term_description_field: false;
+
+// Set column widths for specific fields (use snake case)
+$field_column_widths: (
+  // is_featured: 10%,
+);
+
+// Hide main content editor for certain post types (use kebab case)
+// (it may still need to be there to allow wysiwyg meta fields to work)
+$hide_content_editor_for_post_types: (
+  app-option,
+);
+
+// Hide hierarchy selector from post types that are sortable but are not really
+// supposed to be hierarchical (use kebab case)
+$hide_hierarchy_selector_for_post_types: (
+  // news-article,
+);
+
+// Prevent term checkbox lists from scrolling (use kebab case)
+$prevent_scrolling_term_list_for_taxonomies: (
+  // person-type,
+);
+
+
 body.wp-admin {
-  $admin_blue_dark: #21759b;
-  $admin_blue_light: #2ea2cc;
-  $admin_thumbnail_size: 100px;
-  
-  // Hide main content editor on App Options
-  // (it still needs to be there to allow wysiwyg editors to work for meta fields)
-  &.post-type-app-option {
-    #postdivrich {
-      height: 0;
-      overflow: hidden;
+  @if $highlight_search_engines_discouraged {
+    p a[href*="options-reading.php"] {
+      padding: 2px;
+      background-color: red;
+      color: white;
     }
   }
   
-  // Make textarea and wysiwyg meta fields taller
-  &[class*="taxonomy-"] {
-    table.form-table {
-      textarea {
-        min-height: 100px;
+  @if $hide_post_type_icons {
+    #adminmenu {
+      .wp-menu-name {
+        padding-left: 12px;
+        padding-right: 10px;
       }
-    }
-  }
-  #normal-sortables {
-    textarea.wp-editor-area {
-      min-height: 200px;
-    }
-  }
-  
-  // Fix display of meta fields table on taxonomy page
-  form#addtag {
-    table.form-table {
-      th, td {
-        display: block;
-        padding: 0;
-        width: auto;
-        text-align: left;
-      }
-      th {
-        padding-top: 8px;
-      }
-    }
-  }
-  
-  // Make required fields more obvious
-  span.required {
-    color: #dd2b00;
-    font-weight: bold;
-  }
-  
-  // Add padding to sidebar nav
-  #adminmenu div.wp-menu-name {
-    padding-left: 36px;
-    padding-right: 10px;
-  }
-  
-  // Make meta fields easier to read
-  #normal-sortables {
-    tr td {
-      padding: 12px 0;
-      &:first-child {
-        width: 192px;
-        vertical-align: top;
-      }
-    }
-    p.description {
-      font-size: 13px;
-      color: #888;
-    }
-    label:not(.selectit) {
-      position: relative;
-      top: 4px;
-      display: block;
-      margin-right: 14px;
-      line-height: 18px;
-      text-align: right;
-    }
-    .checkbox-group label {
-      width: auto;
-      text-align: left;
-      margin-right: 0;
-    }
-    input[type="checkbox"],
-    input[type="radio"],
-    input[type="checkbox"] + p.description {
-      position: relative;
-      top: 2px;
-    }
-    input[type="text"],
-    input[type="email"],
-    input[type="color"],
-    input[type="number"],
-    textarea {
-      margin: 0;
-    }
-    .checkbox-group input[type="checkbox"] {
-      float: left;
-      top: 5px;
-      margin-right: 10px;
-    }
-    .addmany-result {
-      tr td {
-        &:first-child {
-          width: 130px;
+      .wp-menu-image {
+        &:not([class*="dashicons-admin-"]):not([class*="dashicons-dashboard"]):not(.svg) {
+          display: none;
+        }
+        &[class*="dashicons-admin-"],
+        &.svg {
+          + .wp-menu-name {
+            padding-left: $admin_icon_width;
+          }
         }
       }
     }
   }
   
-  // Field labels on taxonomy term edit page
-  table.form-table tr.form-field th:first-child {
-    width: 192px;
-    vertical-align: top;
-    text-align: right;
-    label {
-      display: block;
+  @if $dim_private_posts {
+    #the-list tr.status-private {
+      > th, > td {
+        opacity: 0.5;
+      }
     }
   }
   
-  // Hide standard "Description" field on term edit page, in favor of implementing
-  // a more intentional textarea with a specific description underneath
-  // form#addtag .form-field.term-description-wrap,
-  // table.form-table tr.form-field.term-description-wrap {
-  //   display: none;
-  // }
-  
-  // Prevent large images from wrecking post list and edit page
-  #the-list,
-  #normal-sortables .upload_field {
-    img.thumbnail {
-      max-width: $admin_thumbnail_size;
-      max-height: $admin_thumbnail_size;
+  @if length($field_column_widths) != 0 {
+    .wp-list-table {
+      th, td {
+        @each $field in map_keys($field_column_widths) {
+          &.column-#{$field} {
+            width: map_get($field_column_widths, $field);
+          }
+        }
+      }
     }
   }
   
-  #normal-sortables .upload_field {
-    // Use full width for file and image uploads
-    input.upload {
-      display: block;
-      margin-bottom: 6px;
-      width: 100%;
+  @if $prevent_large_images {
+    #the-list,
+    #normal-sortables .upload_field {
+      img.thumbnail {
+        max-width: $admin_thumbnail_size;
+        max-height: $admin_thumbnail_size;
+      }
+    }
+  }
+  
+  @if length($hide_content_editor_for_post_types) != 0 {
+    @each $post_type in $hide_content_editor_for_post_types {
+      &.post-type-#{unquote($post_type)} {
+        #postdivrich {
+          height: 0;
+          overflow: hidden;
+        }
+      }
+    }
+  }
+  
+  @if length($hide_hierarchy_selector_for_post_types) != 0 {
+    @each $post_type in $hide_hierarchy_selector_for_post_types {
+      &.post-type-#{unquote($post_type)} {
+        #pageparentdiv > .inside {
+          p:first-child,
+          label[for="parent_id"],
+          select#parent_id {
+            display: none;
+          }
+        }
+      }
+    }
+  }
+  
+  @if $improve_wysiwyg_appearance {
+    // Make textarea and wysiwyg meta fields taller
+    &[class*="taxonomy-"] {
+      table.form-table {
+        textarea {
+          min-height: 100px;
+        }
+      }
+    }
+    #normal-sortables {
+      textarea.wp-editor-area {
+        min-height: 200px;
+      }
     }
     
-    // Place thumbnail next to image field
-    img.thumbnail {
-      margin-right: 0;
-      float: left;
-      + .upload-field-container {
-        margin-left: ($admin_thumbnail_size + 10px);
+    // Close gap between wysiwyg modes and textarea
+    #normal-sortables {
+      .wp-editor-tools:after {
+        display: none;
       }
     }
   }
   
-  // Hide description column from term list on taxonomy page
-  &[class*="taxonomy-"] table.wp-list-table {
-    th, td {
-      &.column-description {
-        display: none;
+  @if $highlight_required_fields {
+    span.required {
+      color: #dd2b00;
+      font-weight: bold;
+    }
+  }
+  
+  @if $improve_meta_field_appearance {
+    #normal-sortables {
+      tr td {
+        padding: 12px 0;
+        &:first-child {
+          width: $field_label_width;
+          vertical-align: top;
+        }
       }
-      &.column-slug {
-        width: auto !important;
+      p.description {
+        font-size: 13px;
+        color: #888;
+      }
+      label:not(.selectit) {
+        position: relative;
+        top: 4px;
+        display: block;
+        margin-right: 14px;
+        line-height: 18px;
+        text-align: right;
+      }
+      .checkbox-group label {
+        width: auto;
+        text-align: left;
+        margin-right: 0;
+      }
+      input[type="checkbox"],
+      input[type="radio"],
+      input[type="checkbox"] + p.description {
+        position: relative;
+        top: 2px;
+      }
+      input[type="text"],
+      input[type="email"],
+      input[type="color"],
+      input[type="number"],
+      textarea {
+        margin: 0;
+      }
+      .checkbox-group input[type="checkbox"] {
+        float: left;
+        top: 5px;
+        margin-right: 10px;
+      }
+      .addmany-result {
+        tr td {
+          &:first-child {
+            width: $addmany_field_label_width;
+          }
+        }
+      }
+    }
+    
+    // Taxonomies
+    form#addtag {
+      table.form-table {
+        th, td {
+          display: block;
+          padding: 0;
+          width: auto;
+          text-align: left;
+        }
+        th {
+          padding-top: 8px;
+        }
+      }
+    }
+    
+    // Field labels on taxonomy term edit page
+    table.form-table tr.form-field th:first-child {
+      width: $field_label_width;
+      vertical-align: top;
+      text-align: right;
+      label {
+        display: block;
+      }
+    }
+  }
+  
+  @if $improve_file_field_appearance {
+    #normal-sortables .upload_field {
+      // Use full width for file and image uploads
+      input.upload {
+        display: block;
+        margin-bottom: 6px;
+        width: 100%;
+      }
+      
+      // Place thumbnail next to image field
+      img.thumbnail {
+        margin-right: 0;
+        float: left;
+        + .upload-field-container {
+          margin-left: ($admin_thumbnail_size + 10px);
+        }
+      }
+      
+      ~ p {
+        clear: left;
+      }
+    }
+  }
+  
+  @if $hide_term_description_field {
+    form#addtag .form-field.term-description-wrap,
+    table.form-table tr.form-field.term-description-wrap {
+      display: none;
+    }
+    
+    // Hide description column from term list on taxonomy page
+    &[class*="taxonomy-"] table.wp-list-table {
+      th, td {
+        &.column-description {
+          display: none;
+        }
+        &.column-slug {
+          width: auto !important;
+        }
+      }
+    }
+  }
+  
+  @if length($prevent_scrolling_term_list_for_taxonomies) != 0 {
+    @each $taxonomy in $prevent_scrolling_term_list_for_taxonomies {
+      #taxonomy-#{unquote($taxonomy)} {
+        .tabs-panel {
+          max-height: none;
+        }
       }
     }
   }
