@@ -375,7 +375,7 @@ trait Taquito  {
       $image_as_post = get_post($post_image_id);
     }
     // set featured image for post
-    $post_image_path  = app_image_path( // defined in functions-app.php
+    $post_image_path  = Theme::image(
       $this->get('post_image'), $size
     );
     
