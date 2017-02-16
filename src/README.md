@@ -21,25 +21,13 @@ cd into the theme's root directory, and run:
 
 This will add node modules required for the theme to run tasks, particularly for webpack. To begin development, run:
 
-`webpack -d --watch`
+`npm start`
 
 This will create development builds, watch your JavaScript and SASS files.
-
-/* @Ian, please advise for everything below this line, it's a little loosely worded for now. */
 
 ## Webpack Configuration
 
 Webpack configuration is defined on the `webpack.config.js`
-
-### Development Tasks
-
-Running `webpack -d --watch` will look for changes across files and compile them.
-
-### Production Tasks
-
-Running `webpack -p` will run minification tasks.
-
-### Webpack `/src` and `/dist`
 
 Source files are located in `_/src` directory of the theme. Compiled files are dynamically added by webpack to the `_/dist`, when they are referenced via entrypoints.
 
@@ -52,11 +40,6 @@ SASS files similarly live in the `_/src/scss` directory.  These files are not au
 
 ### Webpack CSS entrypoint
 At this time, CSS also outputs to the `_/dist` directory and does not output by the Javascript itself, so you do need to explicitly include them in your HTML.
-
-/* @Ian, please advise for everything below this line, as we've discussed this is out of date for now. Can we delete the init file, for example? */
-
-### Optional git hooks for deploying `/dist` files:
-Run `init` from the taco theme root directory to setup git hooks.
 
 ## Deployment Instructions
 Until a site is live, development can happen on the `master` branch which can be auto-deployed to both the staging and production server.  Once it's launched however, development should be switched to the `develop` branch which is auto-deployed to the staging server.  The production server should run off the `master` branch and have deployment set to manual.
