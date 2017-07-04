@@ -1,6 +1,6 @@
 <?php
 
-class Page extends \Taco\Post {
+class Page extends _Post {
 
   public $loaded_post = null;
 
@@ -31,6 +31,7 @@ class Page extends \Taco\Post {
     }
 
     return array_merge(
+      parent::getFields(),
       $this->getDefaultFields(),
       $fields_by_template
     );
@@ -60,6 +61,12 @@ class Page extends \Taco\Post {
 
     return $template_fields;
   }
+
+
+  public function isSortable() {
+    return true;
+  }
+
 
   /**
    * This should only be used on the admin side to manually load the post in getFields()

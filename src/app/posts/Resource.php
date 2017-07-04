@@ -1,9 +1,8 @@
 <?php
 
-class Resource extends \Taco\Post {
+class Resource extends _Post {
   public function getFields() {
-
-    return array(
+    return array_merge(parent::getFields(), [
       'resource_authors'=>array(
         'type'=>'textarea',
         'description'=>'Separate author names with a semicolon and a space.',
@@ -28,7 +27,7 @@ class Resource extends \Taco\Post {
         'data-post-type'=>'Resource'
       ),
       'created_for_testing' => array('type' => 'checkbox')
-    );
+    ]);
   }
 
   public function getTaxonomies() {
